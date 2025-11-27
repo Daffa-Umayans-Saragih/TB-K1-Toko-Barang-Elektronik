@@ -1,6 +1,6 @@
  #include <stdio.h>
  int main() {
-      printf("Test du fichier FILEUTAMA.c\n");
-      printf("Le fichier FILEUTAMA.c a ete compile et execute avec succes.\n");
+      printf("daffa lagi Test du fichier FILEUTAMA.c\n");
+      printf("bisa gakyah.\n");
       return 0;
  }
