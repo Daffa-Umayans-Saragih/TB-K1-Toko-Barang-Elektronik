@@ -1,6 +1,6 @@
  #include <stdio.h>
  int main() {
       printf("Hello, World!\n");
-      printf("This is FILEUTAMA.c\n");
+      printf("test commitrn");
       return 0;
  }
