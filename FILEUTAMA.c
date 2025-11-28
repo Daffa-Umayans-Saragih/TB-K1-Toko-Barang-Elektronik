@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(){
-    
+    printf("Pilih jenis alat elektronik yang ingin Anda beli:\n");
     printf("1. Kulkas\n"
            "2. Mesin Cuci\n"
            "3. AC\n"
