@@ -2,9 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// ------------------------------
-// TEMPAT MENYIMPAN BELANJAAN
-// ------------------------------
 char namaBarang[100][100];
 int hargaBarang[100];
 int jumlahBarang = 0;
@@ -27,9 +24,8 @@ void cetakStruk(){
     printf("----------------------------\n");
     printf("TOTAL HARGA: Rp %d\n", total);
     printf("===== TERIMA KASIH =====\n");
-    exit(0);
 }
-// ------------------------------
+
 
 
 
@@ -41,11 +37,18 @@ int tampilkanMenu(){
     printf("3. AC\n");
     printf("4. TV\n");
     printf("5. Kompor Listrik\n");
-    printf("6. Keluar\n");
-    printf("Masukkan pilihan Anda (1-6): ");
+    printf("6. Lampu LED\n");
+    printf("7. Kipas Angin Mini\n");
+    printf("8. Senter LED\n");
+    printf("9. Stop Kontak\n");
+    printf("10. Speaker Portable\n");
+    printf("11. Cetak Struk\n");
+
+    printf("Masukkan pilihan Anda (1-11): ");
     scanf("%d", &pilihanbesar);
     return pilihanbesar;
 }
+
 
 int SubKulkas(){
     char pilihan;
@@ -386,8 +389,364 @@ int SubKompor(){
         } else if(pilihan == 'U' || pilihan == 'u'){
             main();
         }
+        else {
+            printf("Pilihan tidak valid.\n");
+            main();
+        }
     }
 }
+
+int SubLampu(){
+    char pilihan;
+    int harga;
+    printf("Berikut pilihan Lampu LED yang dapat anda pilih:\n");
+    printf("Jenis Lampu LED:\n"
+           "a. Lampu LED 5 watt\n"
+           "b. Lampu LED 8 watt\n"
+           "c. Lampu LED 10 watt\n"
+           "d. Lampu LED 15 watt\n"
+           "e. Lampu LED 20 watt\n");
+    printf("Masukkan pilihan Anda (a-e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+
+    if(pilihan == 'a'){
+        harga = 8000;
+        printf("Harga Lampu LED 5 watt: %d\n", harga);
+        tambahBelanja("Lampu LED 5 watt", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 12000;
+        printf("Harga Lampu LED 8 watt: %d\n", harga);
+        tambahBelanja("Lampu LED 8 watt", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 15000;
+        printf("Harga Lampu LED 10 watt: %d\n", harga);
+        tambahBelanja("Lampu LED 10 watt", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 20000;   
+        printf("Harga Lampu LED 15 watt: %d\n", harga);
+        tambahBelanja("Lampu LED 15 watt", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 24000;
+        printf("Harga Lampu LED 20 watt: %d\n", harga);
+        tambahBelanja("Lampu LED 20 watt", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubLampu();
+    }
+
+    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
+        printf("Ingin memesan Lampu LED lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+        if(pilihan == 'K' || pilihan == 'k'){
+            SubLampu();
+        } else if(pilihan == 'X' || pilihan == 'x'){
+            printf("Terima kasih telah menggunakan program ini.\n");
+            cetakStruk();
+        } else if(pilihan == 'U' || pilihan == 'u'){
+            main();
+        }
+    }
+
+    return 1;
+}
+
+int SubKipas(){
+    char pilihan;
+    int harga;
+    printf("Berikut pilihan Kipas Angin Mini USB yang dapat anda pilih:\n");
+    printf("Jenis Kipas:\n"
+           "a. Kipas mini 3 watt\n"
+           "b. Kipas mini 5 watt\n"
+           "c. Kipas mini portable\n"
+           "d. Kipas lipat mini\n"
+           "e. Kipas mini stand\n");
+    printf("Masukkan pilihan Anda (a-e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+
+    if(pilihan == 'a'){
+        harga = 15000;
+        printf("Harga Kipas mini 3 watt: %d\n", harga);
+        tambahBelanja("Kipas mini 3 watt", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 20000;
+        printf("Harga Kipas mini 5 watt: %d\n", harga);
+        tambahBelanja("Kipas mini 5 watt", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 25000;
+        printf("Harga Kipas mini portable: %d\n", harga);
+        tambahBelanja("Kipas mini portable", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 28000;   
+        printf("Harga Kipas lipat mini: %d\n", harga);
+        tambahBelanja("Kipas lipat mini", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 30000;
+        printf("Harga Kipas mini stand: %d\n", harga);
+        tambahBelanja("Kipas mini stand", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubKipas();
+    }
+
+    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
+        printf("Ingin memesan Kipas Angin Mini lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+        if(pilihan == 'K' || pilihan == 'k'){
+            SubKipas();
+        } else if(pilihan == 'X' || pilihan == 'x'){
+            printf("Terima kasih telah menggunakan program ini.\n");
+            cetakStruk();
+        } else if(pilihan == 'U' || pilihan == 'u'){
+            main();
+        }
+    }
+
+    return 1;
+}
+
+int SubSenter(){
+    char pilihan;
+    int harga;
+    printf("Berikut pilihan Senter LED yang dapat anda pilih:\n");
+    printf("Jenis Senter:\n"
+           "a. Senter mini\n"
+           "b. Senter sedang\n"
+           "c. Senter besar\n"
+           "d. Senter kepala (headlamp)\n"
+           "e. Senter police LED\n");
+    printf("Masukkan pilihan Anda (a-e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+
+    if(pilihan == 'a'){
+        harga = 12000;
+        printf("Harga Senter mini: %d\n", harga);
+        tambahBelanja("Senter mini", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 20000;
+        printf("Harga Senter sedang: %d\n", harga);
+        tambahBelanja("Senter sedang", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 35000;
+        printf("Harga Senter besar: %d\n", harga);
+        tambahBelanja("Senter besar", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 25000;   
+        printf("Harga Senter kepala: %d\n", harga);
+        tambahBelanja("Senter kepala", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 30000;
+        printf("Harga Senter police LED: %d\n", harga);
+        tambahBelanja("Senter police LED", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubSenter();
+    }
+
+    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
+        printf("Ingin memesan Senter lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+        if(pilihan == 'K' || pilihan == 'k'){
+            SubSenter();
+        } else if(pilihan == 'X' || pilihan == 'x'){
+            printf("Terima kasih telah menggunakan program ini.\n");
+            cetakStruk();
+        } else if(pilihan == 'U' || pilihan == 'u'){
+            main();
+        }
+    }
+
+    return 1;
+}
+
+int SubStopKontak(){
+    char pilihan;
+    int harga;
+
+    printf("Berikut pilihan Stop Kontak yang dapat anda pilih:\n");
+    printf("Jenis Stop Kontak:\n"
+           "a. Stop kontak 3 lubang\n"
+           "b. Stop kontak 4 lubang\n"
+           "c. Stop kontak + saklar\n"
+           "d. Stop kontak kabel 1.5m\n"
+           "e. Stop kontak T (3-way)\n");
+
+    printf("Masukkan pilihan Anda (a-e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+    scanf(" %c", &pilihan);
+
+    if(pilihan == 'a'){
+        harga = 18000;
+        printf("Harga Stop kontak 3 lubang: %d\n", harga);
+        tambahBelanja("Stop kontak 3 lubang", harga);
+    }
+    else if(pilihan == 'b'){
+        harga = 22000;
+        printf("Harga Stop kontak 4 lubang: %d\n", harga);
+        tambahBelanja("Stop kontak 4 lubang", harga);
+    }
+    else if(pilihan == 'c'){
+        harga = 25000;
+        printf("Harga Stop kontak + saklar: %d\n", harga);
+        tambahBelanja("Stop kontak + saklar", harga);
+    }
+    else if(pilihan == 'd'){
+        harga = 28000;
+        printf("Harga Stop kontak kabel 1.5m: %d\n", harga);
+        tambahBelanja("Stop kontak kabel 1.5m", harga);
+    }
+    else if(pilihan == 'e'){
+        harga = 7000;
+        printf("Harga Stop kontak T (3-way): %d\n", harga);
+        tambahBelanja("Stop kontak T (3-way)", harga);
+    }
+    else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+    }
+    else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+    }
+    else{
+        printf("Pilihan tidak valid.\n");
+        SubStopKontak();
+    }
+
+    if(pilihan=='a'||pilihan=='b'||pilihan=='c'||pilihan=='d'||pilihan=='e'){
+        printf("Ingin memesan Stop Kontak lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k'){
+            SubStopKontak();
+        }
+        else if(pilihan == 'X' || pilihan == 'x'){
+            printf("Terima kasih telah menggunakan program ini.\n");
+            cetakStruk();
+        }
+        else if(pilihan == 'U' || pilihan == 'u'){
+            main();
+        }
+    }
+
+    return 1;
+}
+
+int SubSpeaker(){
+    char pilihan;
+    int harga;
+
+    printf("Berikut pilihan Speaker Portable yang dapat anda pilih:\n");
+    printf("Jenis Speaker:\n"
+           "a. Speaker mini\n"
+           "b. Speaker bluetooth kecil\n"
+           "c. Speaker cube\n"
+           "d. Speaker bass kecil\n"
+           "e. Speaker waterproof mini\n");
+
+    printf("Masukkan pilihan Anda (a-e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+    scanf(" %c", &pilihan);
+
+    if(pilihan == 'a'){
+        harga = 25000;
+        printf("Harga Speaker mini: %d\n", harga);
+        tambahBelanja("Speaker mini", harga);
+    }
+    else if(pilihan == 'b'){
+        harga = 35000;
+        printf("Harga Speaker bluetooth kecil: %d\n", harga);
+        tambahBelanja("Speaker bluetooth kecil", harga);
+    }
+    else if(pilihan == 'c'){
+        harga = 40000;
+        printf("Harga Speaker cube: %d\n", harga);
+        tambahBelanja("Speaker cube", harga);
+    }
+    else if(pilihan == 'd'){
+        harga = 45000;
+        printf("Harga Speaker bass kecil: %d\n", harga);
+        tambahBelanja("Speaker bass kecil", harga);
+    }
+    else if(pilihan == 'e'){
+        harga = 50000;
+        printf("Harga Speaker waterproof mini: %d\n", harga);
+        tambahBelanja("Speaker waterproof mini", harga);
+    }
+    else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+    }
+    else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+    }
+    else{
+        printf("Pilihan tidak valid.\n");
+        SubSpeaker();
+    }
+
+    if(pilihan=='a'||pilihan=='b'||pilihan=='c'||pilihan=='d'||pilihan=='e'){
+        printf("Ingin memesan Speaker lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k'){
+            SubSpeaker();
+        }
+        else if(pilihan == 'X' || pilihan == 'x'){
+            printf("Terima kasih telah menggunakan program ini.\n");
+            cetakStruk();
+        }
+        else if(pilihan == 'U' || pilihan == 'u'){
+            main();
+        }
+    }
+
+    return 1;
+}
+
+
 
 int main(){
     int pilihanbesar = tampilkanMenu();
@@ -398,10 +757,16 @@ int main(){
         case 3: SubAc(); break;
         case 4: SubTV(); break;
         case 5: SubKompor(); break;
-        case 6: cetakStruk(); break;
+        case 6: SubLampu(); break;
+        case 7: SubKipas(); break;
+        case 8: SubSenter(); break;
+        case 9: SubStopKontak(); break;
+        case 10: SubSpeaker(); break;
+        case 11: cetakStruk(); break;
 
         default:
             printf("Pilihan tidak valid.\n");
+            main();
     }
 
     return 0;
