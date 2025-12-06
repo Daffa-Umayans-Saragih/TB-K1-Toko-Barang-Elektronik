@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+// ------------------------------
+// TEMPAT MENYIMPAN BELANJAAN
+// ------------------------------
 char namaBarang[100][100];
 int hargaBarang[100];
 int jumlahBarang = 0;
@@ -24,8 +27,9 @@ void cetakStruk(){
     printf("----------------------------\n");
     printf("TOTAL HARGA: Rp %d\n", total);
     printf("===== TERIMA KASIH =====\n");
+    exit(0);
 }
-
+// ------------------------------
 
 
 
@@ -42,12 +46,18 @@ int tampilkanMenu(){
     printf("8. Senter LED\n");
     printf("9. Stop Kontak\n");
     printf("10. Speaker Portable\n");
-    printf("11. Cetak Struk\n");
-
+    printf("11. SmartWatch\n");
+    printf("12. Drone\n");
+    printf("13. Tablet\n");
+    printf("14. Monitor\n");
+    printf("15. Wireless Earphone\n");
+    printf("16. Cetak Struk\n");
+    
     printf("Masukkan pilihan Anda (1-11): ");
     scanf("%d", &pilihanbesar);
     return pilihanbesar;
 }
+
 
 
 int SubKulkas(){
@@ -64,6 +74,7 @@ int SubKulkas(){
         "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
     int harga;
 
     if(pilihan == 'a'){
@@ -134,6 +145,7 @@ int SubCuci(){
 
     scanf(" %c", &pilihan);
     int harga;
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 2500000;
@@ -203,6 +215,7 @@ int SubAc(){
         "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 3500000;
@@ -273,6 +286,7 @@ int SubTV(){
         "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 4000000;
@@ -341,6 +355,7 @@ int SubKompor(){
         "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 2000000;
@@ -411,6 +426,7 @@ int SubLampu(){
            "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 8000;
@@ -479,6 +495,7 @@ int SubKipas(){
            "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 15000;
@@ -547,6 +564,7 @@ int SubSenter(){
            "Ketik X untuk selesai: ");
 
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 12000;
@@ -689,6 +707,7 @@ int SubSpeaker(){
            "Ketik U untuk ke Menu Utama\n"
            "Ketik X untuk selesai: ");
     scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
     if(pilihan == 'a'){
         harga = 25000;
@@ -746,23 +765,420 @@ int SubSpeaker(){
     return 1;
 }
 
+int SubSmartwatch(){
+    char pilihan;
+    printf("Berikut pilihan Smartwatch yang dapat anda pilih:\n");
+    printf("Jenis Smartwatch:\n"
+        "a. Samsung Galaxy Watch8 Classic\n"
+        "b. Xiaomi Smart Band 9\n"
+        "c. Huawei Watch Fit 4\n"
+        "d. Imoo Smart Watch Phone Z7\n"
+        "e. Garmin Venu X1 010-02980-13\n");
+    printf("Masukkan pilihan Anda (a–e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
 
+    scanf(" %c", &pilihan);
+    int harga;
+    pilihan = tolower(pilihan);
+
+    if(pilihan == 'a'){
+        harga = 6999000;
+        printf("Harga Samsung Galaxy Watch8 Classic: %d\n", harga);
+        tambahBelanja("Samsung Galaxy Watch8 Classic", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 569000;
+        printf("Harga Xiaomi Smart Band 9: %d\n", harga);
+        tambahBelanja("Xiaomi Smart Band 9", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 859000;
+        printf("Harga Huawei Watch Fit 4: %d\n", harga);
+        tambahBelanja("Huawei Watch Fit 4", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 2999000;
+        printf("Harga Imoo Smart Watch Phone Z7: %d\n", harga);
+        tambahBelanja("Imoo Smart Watch Phone Z7", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 13439000;
+        printf("Harga Garmin Venu X1 010-02980-13: %d\n", harga);
+        tambahBelanja("Garmin Venu X1 010-02980-13", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubSmartwatch();
+    }
+
+    if(pilihan=='a'||pilihan=='b'||pilihan=='c'||pilihan=='d'||pilihan=='e'){
+        printf("Ingin memesan Smartwatch lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k') {
+          SubSmartwatch();
+        }
+        else if(pilihan == 'X' || pilihan == 'x'){ 
+          printf("Terima kasih telah menggunakan program ini.\n");
+          cetakStruk(); 
+        }
+        else if(pilihan == 'U' || pilihan == 'u'){
+           main();
+        }
+    }
+
+    return pilihan;
+}
+
+int SubDrone(){
+    char pilihan;
+    printf("Berikut pilihan Drone yang dapat anda pilih:\n");
+    printf("Jenis Drone:\n"
+        "a. DJI Mini 4K Drone\n"
+        "b. DJI Mini 5 Pro Fly More Combo\n"
+        "c. DJI Neo Basic Drone\n"
+        "d. Huawei A22 PRO GPS\n"
+        "e. Brica B-Pro 5 Sky Explorer Drone\n");
+    printf("Masukkan pilihan Anda (a–e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
+    int harga;
+
+    if(pilihan == 'a'){
+        harga = 4939000;
+        printf("Harga DJI Mini 4K Drone: %d\n", harga);
+        tambahBelanja("DJI Mini 4K Drone", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 17090000;
+        printf("Harga DJI Mini 5 Pro Fly More Combo: %d\n", harga);
+        tambahBelanja("DJI Mini 5 Pro Fly More Combo", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 3000000;
+        printf("Harga DJI Neo Basic Drone: %d\n", harga);
+        tambahBelanja("DJI Neo Basic Drone", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 1373000;
+        printf("Harga Huawei A22 PRO GPS: %d\n", harga);
+        tambahBelanja("Huawei A22 PRO GPS", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 1645000;
+        printf("Harga Brica B-Pro 5 Sky Explorer Drone: %d\n", harga);
+        tambahBelanja("Brica B-Pro 5 Sky Explorer Drone", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubDrone();
+    }
+
+    if(pilihan >= 'a' && pilihan <= 'e'){
+        printf("Ingin memesan Drone lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k') {
+          SubDrone();
+        }
+        else if(pilihan == 'X' || pilihan == 'x'){ 
+          printf("Terima kasih telah menggunakan program ini.\n");
+          cetakStruk(); 
+        }
+        else if(pilihan == 'U' || pilihan == 'u') {
+          main();
+        } 
+    }
+
+    return pilihan;
+}
+
+int SubTablet(){
+    char pilihan;
+    printf("Berikut pilihan Tablet yang dapat anda pilih:\n");
+    printf("Jenis Tablet:\n"
+        "a. Huawei MatePad 11.5\n"
+        "b. OPPO Pad SE 4+128GB\n"
+        "c. Samsung Galaxy Tab A9\n"
+        "d. Xiaomi Redmi Pad SE\n"
+        "e. Apple iPad Pro 11\n");
+    printf("Masukkan pilihan Anda (a–e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
+    int harga;
+
+    if(pilihan == 'a'){
+        harga = 5979000;
+        printf("Harga Huawei MatePad 11.5: %d\n", harga);
+        tambahBelanja("Huawei MatePad 11.5", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 2999000;
+        printf("Harga OPPO Pad SE 4+128GB: %d\n", harga);
+        tambahBelanja("OPPO Pad SE 4+128GB", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 1775000;
+        printf("Harga Samsung Galaxy Tab A9: %d\n", harga);
+        tambahBelanja("Samsung Galaxy Tab A9", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 1649000;
+        printf("Harga Xiaomi Redmi Pad SE: %d\n", harga);
+        tambahBelanja("Xiaomi Redmi Pad SE", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 23999000;
+        printf("Harga Apple iPad Pro 11: %d\n", harga);
+        tambahBelanja("Apple iPad Pro 11", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubTablet();
+    }
+
+    if(pilihan >= 'a' && pilihan <= 'e'){
+        printf("Ingin memesan Tablet lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k') {
+          SubTablet();
+          }
+        else if(pilihan == 'X' || pilihan == 'x'){ 
+          printf("Terima kasih telah menggunakan program ini.\n");
+           cetakStruk(); 
+          }
+        else if(pilihan == 'U' || pilihan == 'u') {
+          main();
+        }
+    }
+
+    return pilihan;
+}
+
+int SubMonitor(){
+    char pilihan;
+    printf("Berikut pilihan Monitor yang dapat anda pilih:\n");
+    printf("Jenis Monitor:\n"
+        "a. LG 24MR400-B 24 Inch IPS FHD\n"
+        "b. Xiaomi 2K Monitor A27Qi\n"
+        "c. LG 19M38A 19 Inch LED\n"
+        "d. HGFRTEE Portable Monitor 15.6 Inch IPS FHD\n"
+        "e. Philips LED 241v8b 24 Inch\n");
+    printf("Masukkan pilihan Anda (a–e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
+    int harga;
+
+    if(pilihan == 'a'){
+        harga = 1268250;
+        printf("Harga LG 24MR400-B: %d\n", harga);
+        tambahBelanja("LG 24MR400-B 24 Inch IPS FHD", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 2696500;
+        printf("Harga Xiaomi 2K Monitor A27Qi: %d\n", harga);
+        tambahBelanja("Xiaomi 2K Monitor A27Qi", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 1099800;
+        printf("Harga LG 19M38A 19 Inch LED: %d\n", harga);
+        tambahBelanja("LG 19M38A 19 Inch LED", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 909000;
+        printf("Harga HGFRTEE Portable Monitor: %d\n", harga);
+        tambahBelanja("HGFRTEE Portable Monitor 15.6 Inch IPS FHD", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 1382250;
+        printf("Harga Philips LED 241v8b 24 Inch: %d\n", harga);
+        tambahBelanja("Philips LED 241v8b 24 Inch", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubMonitor();
+    }
+
+    if(pilihan >= 'a' && pilihan <= 'e'){
+        printf("Ingin memesan Monitor lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k') {
+        SubMonitor();
+        }
+        else if(pilihan == 'X' || pilihan == 'x'){ 
+          printf("Terima kasih telah menggunakan program ini.\n"); 
+          cetakStruk(); 
+        }
+        else if(pilihan == 'U' || pilihan == 'u') {
+          main();
+        }
+    }
+    return pilihan;
+}
+
+int SubWirelessEarphone(){
+    char pilihan;
+    printf("Berikut pilihan Wireless Earphone yang dapat anda pilih:\n");
+    printf("Jenis Wireless Earphone:\n"
+        "a. Apple AirPods Pro\n"
+        "b. Baseus WM01\n"
+        "c. JBL Wave Buds 2\n"
+        "d. QKZ CK5 HiFi In-Ear\n"
+        "e. TWS Pro 4 Wireless Earbuds\n");
+    printf("Masukkan pilihan Anda (a–e)\n"
+           "Ketik U untuk ke Menu Utama\n"
+           "Ketik X untuk selesai: ");
+
+    scanf(" %c", &pilihan);
+    int harga;
+
+    if(pilihan == 'a'){
+        harga = 3499000;
+        printf("Harga Apple AirPods Pro: %d\n", harga);
+        tambahBelanja("Apple AirPods Pro", harga);
+
+    } else if(pilihan == 'b'){
+        harga = 170000;
+        printf("Harga Baseus WM01: %d\n", harga);
+        tambahBelanja("Baseus True Wireless Bluetooth WM01", harga);
+
+    } else if(pilihan == 'c'){
+        harga = 1169100;
+        printf("Harga JBL Wave Buds 2: %d\n", harga);
+        tambahBelanja("JBL Wave Buds 2", harga);
+
+    } else if(pilihan == 'd'){
+        harga = 34200;
+        printf("Harga QKZ CK5 HiFi In-Ear: %d\n", harga);
+        tambahBelanja("QKZ CK5 HiFi In-Ear Earphones", harga);
+
+    } else if(pilihan == 'e'){
+        harga = 39800;
+        printf("Harga TWS Pro 4 Wireless Earbuds: %d\n", harga);
+        tambahBelanja("TWS Pro 4 Wireless Earbuds", harga);
+
+    } else if(pilihan == 'X' || pilihan == 'x'){
+        printf("Terima kasih telah menggunakan program ini.\n");
+        cetakStruk();
+
+    } else if(pilihan == 'U' || pilihan == 'u'){
+        main();
+
+    } else {
+        printf("Pilihan tidak valid.\n");
+        SubWirelessEarphone();
+    }
+
+    if(pilihan >= 'a' && pilihan <= 'e'){
+        printf("Ingin memesan Wireless Earphone lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
+        scanf(" %c", &pilihan);
+
+        if(pilihan == 'K' || pilihan == 'k') {
+          SubWirelessEarphone();
+        }
+        else if(pilihan == 'X' || pilihan == 'x'){ 
+          printf("Terima kasih telah menggunakan program ini.\n"); 
+          cetakStruk(); 
+        }
+        else if(pilihan == 'U' || pilihan == 'u') {
+          main();
+        }
+    }
+    return pilihan;
+}
 
 int main(){
     int pilihanbesar = tampilkanMenu();
 
     switch(pilihanbesar){
-        case 1: SubKulkas(); break;
-        case 2: SubCuci(); break;
-        case 3: SubAc(); break;
-        case 4: SubTV(); break;
-        case 5: SubKompor(); break;
-        case 6: SubLampu(); break;
-        case 7: SubKipas(); break;
-        case 8: SubSenter(); break;
-        case 9: SubStopKontak(); break;
-        case 10: SubSpeaker(); break;
-        case 11: cetakStruk(); break;
+        case 1: 
+        SubKulkas(); 
+        break;
+        case 2: 
+        SubCuci(); 
+        break;
+        case 3: 
+        SubAc(); 
+        break;
+        case 4: 
+        SubTV(); 
+        break;
+        case 5: 
+        SubKompor(); 
+        break;
+        case 6: 
+        SubLampu(); 
+        break;
+        case 7: 
+        SubKipas(); 
+        break;
+        case 8: 
+        SubSenter(); 
+        break;
+        case 9: 
+        SubStopKontak(); 
+        break;
+        case 10: 
+        SubSpeaker(); 
+        break;
+        case 11: 
+        SubSmartwatch();
+        break;
+        case 12: 
+        SubDrone();
+        break;
+        case 13:
+        SubTablet();
+        break;
+        case 14:
+        SubMonitor();
+        break;
+        case 15:
+        SubWirelessEarphone();
+        break;
+        case 16: 
+        cetakStruk(); 
+        break;
 
         default:
             printf("Pilihan tidak valid.\n");
