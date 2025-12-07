@@ -1,10 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-// ------------------------------
-// TEMPAT MENYIMPAN BELANJAAN
-// ------------------------------
+#define RESET   "\033[0m"
+#define GREEN   "\033[1;32m"
+#define WHITE   "\033[1;37m"
+
+void header(const char *judul){
+    printf(GREEN "========================================================\n" RESET);
+    printf(GREEN "%s\n" RESET, judul);
+    printf(GREEN "========================================================\n" RESET);
+}
+
+void garis(){
+    printf      ("--------------------------------------------------------\n");
+}
+
+
 char namaBarang[100][100];
 int hargaBarang[100];
 int jumlahBarang = 0;
@@ -16,1545 +29,885 @@ void tambahBelanja(const char *nama, int harga){
 }
 
 void cetakStruk(){
-    printf("\n===== STRUK PEMBELIAN =====\n");
+    header("                       STRUK PEMBELIAN");
 
     int total = 0;
+
     for(int i = 0; i < jumlahBarang; i++){
         printf("%d. %s - Rp %d\n", i+1, namaBarang[i], hargaBarang[i]);
         total += hargaBarang[i];
     }
 
-    printf("----------------------------\n");
-    printf("TOTAL HARGA: Rp %d\n", total);
-    printf("===== TERIMA KASIH =====\n");
+    garis();
+    printf(GREEN "                  TOTAL HARGA: Rp %d\n" RESET, total);
+    garis();
+
+    // BONUS
+    if (total >= 80000000) printf("Selamat anda mendapat bonus Kulkas 2 Pintu\n");
+    else if (total >= 60000000) printf("Selamat anda mendapat bonus Kulkas 1 Pintu\n");
+    else if (total >= 40000000) printf("Selamat anda mendapat bonusOPPO Pad SE (4/128)\n");
+    else if (total >= 30000000) printf("Selamat anda mendapat bonus Monitor LG 19M38A\n");
+    else if (total >= 20000000) printf("Selamat anda mendapat bonus Xiaomi Smart Band 9\n");
+    else if (total >= 10000000) printf("Selamat anda mendapat bonus Speaker Bluetooth Mini\n");
+    else if (total >= 3000000)  printf("Selamat anda mendapat bonus Lampu LED 10 Watt\n");
+
+    header("                        TERIMA KASIH");
     exit(0);
 }
-// ------------------------------
-
-
 
 int tampilkanMenu(){
     int pilihanbesar;
-    printf("=== Menu Utama ===\n");
-    printf("1. Kulkas\n");
-    printf("2. Mesin Cuci\n");
-    printf("3. AC\n");
-    printf("4. TV\n");
-    printf("5. Kompor Listrik\n");
-    printf("6. Lampu LED\n");
-    printf("7. Kipas Angin Mini\n");
-    printf("8. Senter LED\n");
-    printf("9. Stop Kontak\n");
-    printf("10. Speaker Portable\n");
-    printf("11. SmartWatch\n");
-    printf("12. Drone\n");
-    printf("13. Tablet\n");
-    printf("14. Monitor\n");
-    printf("15. Wireless Earphone\n");
-    printf("16. Laptop\n");
-    printf("17. HandPhone\n");
-    printf("18. blender\n");
-    printf("19. Rice COoker\n");
-    printf("20. Power Bank\n");
-    printf("21. Cetak Struk\n");
 
-    
-    printf("Masukkan pilihan Anda (1-11): ");
+    header("                        MENU UTAMA");
+
+    printf(
+    "1.  Kulkas\n"
+    "2.  Mesin Cuci\n"
+    "3.  AC\n"
+    "4.  TV\n"
+    "5.  Kompor Listrik\n"
+    "6.  Lampu LED\n"
+    "7.  Kipas Mini\n"
+    "8.  Senter LED\n"
+    "9.  Stop Kontak\n"
+    "10. Speaker Portable\n"
+    "11. SmartWatch\n"
+    "12. Drone\n"
+    "13. Tablet\n"
+    "14. Monitor\n"
+    "15. Wireless Earphone\n"
+    "16. Laptop\n"
+    "17. Handphone\n"
+    "18. Blender\n"
+    "19. Rice Cooker\n"
+    "20. Power Bank\n"
+    "21. Cetak Struk\n"
+    );
+
+    garis();
+    printf(GREEN "Masukkan pilihan Anda (1-21): " RESET);
     scanf("%d", &pilihanbesar);
+
     return pilihanbesar;
 }
+
+int pemilihan(); 
 
 
 
 int SubKulkas(){
+    header("Berikut pilihan kulkas yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan kulkas yang dapat anda pilih:\n");
-    printf("Jenis Kulkas:\n"
-        "a. Kulkas 1 Pintu\n"
-        "b. Kulkas 2 Pintu\n"
-        "c. Kulkas Side by Side\n"
-        "d. Kulkas French Door\n"
-        "e. Kulkas Mini\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 3000000;
-        printf("Harga Kulkas 1 Pintu: %d\n", harga);
-        tambahBelanja("Kulkas 1 Pintu", harga);
+    printf(
+        "a. Kulkas 1 Pintu    - Rp3.000.000\n"
+        "b. Kulkas 2 Pintu    - Rp5.000.000\n"
+        "c. Side by Side      - Rp8.000.000\n"
+        "d. French Door       - Rp12.000.000\n"
+        "e. Kulkas Mini       - Rp150.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
-    } else if(pilihan == 'b' ){
-        harga = 5000000;
-        printf("Harga Kulkas 2 Pintu: %d\n", harga);
-        tambahBelanja("Kulkas 2 Pintu", harga);
+    if(pilihan=='a'){ harga=3000000; tambahBelanja("Kulkas 1 Pintu", harga); }
+    else if(pilihan=='b'){ harga=5000000; tambahBelanja("Kulkas 2 Pintu", harga); }
+    else if(pilihan=='c'){ harga=8000000; tambahBelanja("Side by Side", harga); }
+    else if(pilihan=='d'){ harga=12000000; tambahBelanja("French Door", harga); }
+    else if(pilihan=='e'){ harga=150000; tambahBelanja("Kulkas Mini", harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubKulkas();
 
-    } else if(pilihan == 'c'){
-        harga = 8000000;
-        printf("Harga Kulkas Side by Side: %d\n", harga);
-        tambahBelanja("Kulkas Side by Side", harga);
+    printf("Ketik K untuk pesan kulkas lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c", &pilihan);
+    if(tolower(pilihan)=='k') return SubKulkas();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'd'){
-        harga = 12000000;   
-        printf("Harga Kulkas French Door: %d\n", harga);
-        tambahBelanja("Kulkas French Door", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 150000;
-        printf("Harga Kulkas Mini: %d\n", harga);
-        tambahBelanja("Kulkas Mini", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubKulkas();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan kulkas lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubKulkas();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
+
 
 int SubCuci(){
+    header("Berikut pilihan mesin cuci yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan mesin cuci yang dapat anda pilih:\n");
-    printf("Jenis Mesin Cuci:\n"
-            "a. Mesin Cuci Top Loading\n"
-            "b. Mesin Cuci Front Loading\n"
-            "c. Mesin Cuci Semi Automatic\n"
-            "d. Mesin Cuci Portable\n"
-            "e. Mesin Cuci Twin Tub\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
     int harga;
-    pilihan = tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 2500000;
-        printf("Harga Mesin Cuci Top Loading: %d\n", harga);
-        tambahBelanja("Mesin Cuci Top Loading", harga);
+    printf(
+        "a. Top Loading       - Rp2.500.000\n"
+        "b. Front Loading     - Rp4.000.000\n"
+        "c. Semi Automatic    - Rp1.500.000\n"
+        "d. Portable          - Rp1.000.000\n"
+        "e. Twin Tub          - Rp1.800.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c", &pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'b'){
-        harga = 4000000;
-        printf("Harga Mesin Cuci Front Loading: %d\n", harga);
-        tambahBelanja("Mesin Cuci Front Loading", harga);
+    if(pilihan=='a'){ harga=2500000; tambahBelanja("Mesin Cuci Top Loading", harga); }
+    else if(pilihan=='b'){ harga=4000000; tambahBelanja("Mesin Cuci Front Loading", harga); }
+    else if(pilihan=='c'){ harga=1500000; tambahBelanja("Mesin Cuci Semi Automatic", harga); }
+    else if(pilihan=='d'){ harga=1000000; tambahBelanja("Mesin Cuci Portable", harga); }
+    else if(pilihan=='e'){ harga=1800000; tambahBelanja("Mesin Cuci Twin Tub", harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubCuci();
 
-    } else if(pilihan == 'c'){
-        harga = 1500000;
-        printf("Harga Mesin Cuci Semi Automatic: %d\n", harga);
-        tambahBelanja("Mesin Cuci Semi Automatic", harga);
+    printf("Ketik K untuk pesan Mesin Cuci lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubCuci();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'd'){
-        harga = 1000000;   
-        printf("Harga Mesin Cuci Portable: %d\n", harga);
-        tambahBelanja("Mesin Cuci Portable", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 1800000;
-        printf("Harga Mesin Cuci Twin Tub: %d\n", harga);
-        tambahBelanja("Mesin Cuci Twin Tub", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubCuci();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan mesin cuci lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubCuci();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubAc(){
+    header("Berikut pilihan AC yang dapat anda pilih:");
     char pilihan;
     int harga;
-    printf("Berikut pilihan AC yang dapat anda pilih:\n");
-    printf("Jenis AC:\n"
-            "a. AC Split\n"
-            "b. AC Window\n"
-            "c. AC Portable\n"
-            "d. AC Central\n"
-            "e. AC Ducted\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
 
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    printf(
+        "a. AC Split        - Rp3.500.000\n"
+        "b. AC Window       - Rp2.500.000\n"
+        "c. AC Portable     - Rp3.000.000\n"
+        "d. AC Central      - Rp15.000.000\n"
+        "e. AC Ducted       - Rp12.000.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 3500000;
-        printf("Harga AC Split: %d\n", harga);
-        tambahBelanja("AC Split", harga);
+    if(pilihan=='a'){ harga=3500000; tambahBelanja("AC Split",harga); }
+    else if(pilihan=='b'){ harga=2500000; tambahBelanja("AC Window",harga); }
+    else if(pilihan=='c'){ harga=3000000; tambahBelanja("AC Portable",harga); }
+    else if(pilihan=='d'){ harga=15000000; tambahBelanja("AC Central",harga); }
+    else if(pilihan=='e'){ harga=12000000; tambahBelanja("AC Ducted",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubAc();
 
-    } else if(pilihan == 'b'){
-        harga = 2500000;
-        printf("Harga AC Window: %d\n", harga);
-        tambahBelanja("AC Window", harga);
+    printf("Ketik K untuk pesan AC lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubAc();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'c'){
-        harga = 3000000;
-        printf("Harga AC Portable: %d\n", harga);
-        tambahBelanja("AC Portable", harga);
-
-    } else if(pilihan == 'd'){
-        harga = 15000000;   
-        printf("Harga AC Central: %d\n", harga);
-        tambahBelanja("AC Central", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 12000000;
-        printf("Harga AC Ducted: %d\n", harga);
-        tambahBelanja("AC Ducted", harga);
-
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubAc();
-    }
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan AC lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubAc();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return 1;
+    return 0;
 }
+
 
 int SubTV(){
-
+    header("Berikut pilihan TV yang dapat anda pilih:");
     char pilihan;
     int harga;
-    printf("Berikut pilihan TV yang dapat anda pilih:\n");
-    printf("Jenis TV:\n"
-            "a. LED TV\n"
-            "b. OLED TV\n"
-            "c. QLED TV\n"
-            "d. Smart TV\n"
-            "e. 4K TV\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
 
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    printf(
+        "a. LED TV         - Rp4.000.000\n"
+        "b. OLED TV        - Rp10.000.000\n"
+        "c. QLED TV        - Rp8.000.000\n"
+        "d. Smart TV       - Rp6.000.000\n"
+        "e. 4K TV          - Rp12.000.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 4000000;
-        printf("Harga LED TV: %d\n", harga);
-        tambahBelanja("LED TV", harga);
+    if(pilihan=='a'){ harga=4000000; tambahBelanja("LED TV",harga); }
+    else if(pilihan=='b'){ harga=10000000; tambahBelanja("OLED TV",harga); }
+    else if(pilihan=='c'){ harga=8000000; tambahBelanja("QLED TV",harga); }
+    else if(pilihan=='d'){ harga=6000000; tambahBelanja("Smart TV",harga); }
+    else if(pilihan=='e'){ harga=12000000; tambahBelanja("4K TV",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubTV();
 
-    } else if(pilihan == 'b'){
-        harga = 10000000;
-        printf("Harga OLED TV: %d\n", harga);
-        tambahBelanja("OLED TV", harga);
+    printf("Ketik K untuk pesan TV lagi, U untuk ke Menu Utama, X untuk selesai:");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubTV();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'c'){
-        harga = 8000000;
-        printf("Harga QLED TV: %d\n", harga);
-        tambahBelanja("QLED TV", harga);
-
-    } else if(pilihan == 'd'){
-        harga = 6000000;   
-        printf("Harga Smart TV: %d\n", harga);
-        tambahBelanja("Smart TV", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 12000000;
-        printf("Harga 4K TV: %d\n", harga);
-        tambahBelanja("4K TV", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubTV();
-    }
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan TV lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubTV();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
+    return 0;
 }
+
 
 int SubKompor(){
+    header("Berikut pilihan Kompor Listrik yang dapat anda pilih:");
     char pilihan;
     int harga;
-    printf("Berikut pilihan Kompor Listrik yang dapat anda pilih:\n");
-    printf("Jenis Kompor Listrik:\n"
-           "a. Kompor Induksi\n"
-           "b. Kompor Halogen\n"
-           "c. Kompor Keramik\n"
-           "d. Kompor Listrik Portable\n"
-           "e. Kompor Listrik Tanam\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik K untuk pesan Kompor Listrik lagi\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
 
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    printf(
+        "a. Kompor Induksi      - Rp2.000.000\n"
+        "b. Kompor Halogen      - Rp1.500.000\n"
+        "c. Kompor Keramik      - Rp1.800.000\n"
+        "d. Kompor Portable     - Rp1.000.000\n"
+        "e. Kompor Tanam        - Rp2.500.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 2000000;
-        printf("Harga Kompor Induksi: %d\n", harga);
-        tambahBelanja("Kompor Induksi", harga);
+    if(pilihan=='a'){ harga=2000000; tambahBelanja("Kompor Induksi",harga); }
+    else if(pilihan=='b'){ harga=1500000; tambahBelanja("Kompor Halogen",harga); }
+    else if(pilihan=='c'){ harga=1800000; tambahBelanja("Kompor Keramik",harga); }
+    else if(pilihan=='d'){ harga=1000000; tambahBelanja("Kompor Portable",harga); }
+    else if(pilihan=='e'){ harga=2500000; tambahBelanja("Kompor Tanam",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubKompor();
 
-    } else if(pilihan == 'b'){
-        harga = 1500000;
-        printf("Harga Kompor Halogen: %d\n", harga);
-        tambahBelanja("Kompor Halogen", harga);
+    printf("Ketik K untuk pesan Kompor Listrik lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubKompor();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'c'){
-        harga = 1800000;
-        printf("Harga Kompor Keramik: %d\n", harga);
-        tambahBelanja("Kompor Keramik", harga);
-
-    } else if(pilihan == 'd'){
-        harga = 1000000;   
-        printf("Harga Kompor Listrik Portable: %d\n", harga);
-        tambahBelanja("Kompor Portable", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 2500000;
-        printf("Harga Kompor Listrik Tanam: %d\n", harga);
-        tambahBelanja("Kompor Listrik Tanam", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubKompor();
-    }
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan Kompor Listrik lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubKompor();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-        else {
-            printf("Pilihan tidak valid.\n");
-            main();
-        }
-    }
+    return 0;
 }
+
 
 int SubLampu(){
+    header("Berikut pilihan Lampu LED yang dapat anda pilih:");
     char pilihan;
     int harga;
-    printf("Berikut pilihan Lampu LED yang dapat anda pilih:\n");
-    printf("Jenis Lampu LED:\n"
-           "a. Lampu LED 5 watt\n"
-           "b. Lampu LED 8 watt\n"
-           "c. Lampu LED 10 watt\n"
-           "d. Lampu LED 15 watt\n"
-           "e. Lampu LED 20 watt\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
 
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    printf(
+        "a. LED 5W    - Rp8.000\n"
+        "b. LED 8W    - Rp12.000\n"
+        "c. LED 10W   - Rp15.000\n"
+        "d. LED 15W   - Rp20.000\n"
+        "e. LED 20W   - Rp24.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 8000;
-        printf("Harga Lampu LED 5 watt: %d\n", harga);
-        tambahBelanja("Lampu LED 5 watt", harga);
+    if(pilihan=='a'){ harga=8000; tambahBelanja("Lampu LED 5W",harga); }
+    else if(pilihan=='b'){ harga=12000; tambahBelanja("Lampu LED 8W",harga); }
+    else if(pilihan=='c'){ harga=15000; tambahBelanja("Lampu LED 10W",harga); }
+    else if(pilihan=='d'){ harga=20000; tambahBelanja("Lampu LED 15W",harga); }
+    else if(pilihan=='e'){ harga=24000; tambahBelanja("Lampu LED 20W",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubLampu();
 
-    } else if(pilihan == 'b'){
-        harga = 12000;
-        printf("Harga Lampu LED 8 watt: %d\n", harga);
-        tambahBelanja("Lampu LED 8 watt", harga);
+    printf("Ketik K untuk pesan Lampu LED lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubLampu();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'c'){
-        harga = 15000;
-        printf("Harga Lampu LED 10 watt: %d\n", harga);
-        tambahBelanja("Lampu LED 10 watt", harga);
-
-    } else if(pilihan == 'd'){
-        harga = 20000;   
-        printf("Harga Lampu LED 15 watt: %d\n", harga);
-        tambahBelanja("Lampu LED 15 watt", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 24000;
-        printf("Harga Lampu LED 20 watt: %d\n", harga);
-        tambahBelanja("Lampu LED 20 watt", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubLampu();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan Lampu LED lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubLampu();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return 1;
+    return 0;
 }
+
 
 int SubKipas(){
+    header("Berikut pilihan Kipas Angin Mini yang dapat anda pilih:");
     char pilihan;
     int harga;
-    printf("Berikut pilihan Kipas Angin Mini USB yang dapat anda pilih:\n");
-    printf("Jenis Kipas:\n"
-           "a. Kipas mini 3 watt\n"
-           "b. Kipas mini 5 watt\n"
-           "c. Kipas mini portable\n"
-           "d. Kipas lipat mini\n"
-           "e. Kipas mini stand\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
 
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    printf(
+        "a. Mini 3W        - Rp15.000\n"
+        "b. Mini 5W        - Rp20.000\n"
+        "c. Portable       - Rp25.000\n"
+        "d. Lipat          - Rp28.000\n"
+        "e. Mini Stand     - Rp30.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 15000;
-        printf("Harga Kipas mini 3 watt: %d\n", harga);
-        tambahBelanja("Kipas mini 3 watt", harga);
+    if(pilihan=='a'){ harga=15000; tambahBelanja("Kipas Mini 3W",harga); }
+    else if(pilihan=='b'){ harga=20000; tambahBelanja("Kipas Mini 5W",harga); }
+    else if(pilihan=='c'){ harga=25000; tambahBelanja("Kipas Portable",harga); }
+    else if(pilihan=='d'){ harga=28000; tambahBelanja("Kipas Lipat",harga); }
+    else if(pilihan=='e'){ harga=30000; tambahBelanja("Kipas Mini Stand",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubKipas();
 
-    } else if(pilihan == 'b'){
-        harga = 20000;
-        printf("Harga Kipas mini 5 watt: %d\n", harga);
-        tambahBelanja("Kipas mini 5 watt", harga);
+    printf("Ketik K untuk pesan Kipas Angin Mini lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubKipas();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'c'){
-        harga = 25000;
-        printf("Harga Kipas mini portable: %d\n", harga);
-        tambahBelanja("Kipas mini portable", harga);
-
-    } else if(pilihan == 'd'){
-        harga = 28000;   
-        printf("Harga Kipas lipat mini: %d\n", harga);
-        tambahBelanja("Kipas lipat mini", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 30000;
-        printf("Harga Kipas mini stand: %d\n", harga);
-        tambahBelanja("Kipas mini stand", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubKipas();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan Kipas Angin Mini lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubKipas();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return 1;
+    return 0;
 }
+
 
 int SubSenter(){
+    header("Berikut pilihan Senter LED yang dapat anda pilih:");
     char pilihan;
     int harga;
-    printf("Berikut pilihan Senter LED yang dapat anda pilih:\n");
-    printf("Jenis Senter:\n"
-           "a. Senter mini\n"
-           "b. Senter sedang\n"
-           "c. Senter besar\n"
-           "d. Senter kepala (headlamp)\n"
-           "e. Senter police LED\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
 
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    printf(
+        "a. Mini         - Rp12.000\n"
+        "b. Sedang       - Rp20.000\n"
+        "c. Besar        - Rp35.000\n"
+        "d. Headlamp     - Rp25.000\n"
+        "e. Police LED   - Rp30.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 12000;
-        printf("Harga Senter mini: %d\n", harga);
-        tambahBelanja("Senter mini", harga);
+    if(pilihan=='a'){ harga=12000; tambahBelanja("Senter Mini",harga); }
+    else if(pilihan=='b'){ harga=20000; tambahBelanja("Senter Sedang",harga); }
+    else if(pilihan=='c'){ harga=35000; tambahBelanja("Senter Besar",harga); }
+    else if(pilihan=='d'){ harga=25000; tambahBelanja("Headlamp",harga); }
+    else if(pilihan=='e'){ harga=30000; tambahBelanja("Police LED",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubSenter();
 
-    } else if(pilihan == 'b'){
-        harga = 20000;
-        printf("Harga Senter sedang: %d\n", harga);
-        tambahBelanja("Senter sedang", harga);
+    printf("Ketik K untuk pesan Senter LED lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubSenter();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'c'){
-        harga = 35000;
-        printf("Harga Senter besar: %d\n", harga);
-        tambahBelanja("Senter besar", harga);
-
-    } else if(pilihan == 'd'){
-        harga = 25000;   
-        printf("Harga Senter kepala: %d\n", harga);
-        tambahBelanja("Senter kepala", harga);
-
-    } else if(pilihan == 'e'){
-        harga = 30000;
-        printf("Harga Senter police LED: %d\n", harga);
-        tambahBelanja("Senter police LED", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubSenter();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan Senter lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubSenter();
-        } else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return 1;
+    return 0;
 }
+
 
 int SubStopKontak(){
+    header("Berikut pilihan Stop Kontak yang dapat anda pilih:");
     char pilihan;
     int harga;
 
-    printf("Berikut pilihan Stop Kontak yang dapat anda pilih:\n");
-    printf("Jenis Stop Kontak:\n"
-           "a. Stop kontak 3 lubang\n"
-           "b. Stop kontak 4 lubang\n"
-           "c. Stop kontak + saklar\n"
-           "d. Stop kontak kabel 1.5m\n"
-           "e. Stop kontak T (3-way)\n");
+    printf(
+        "a. 3 Lubang     - Rp18.000\n"
+        "b. 4 Lubang     - Rp22.000\n"
+        "c. + Saklar     - Rp25.000\n"
+        "d. Kabel 1.5m   - Rp28.000\n"
+        "e. Stop T       - Rp7.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    printf("Masukkan pilihan Anda (a-e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-    scanf(" %c", &pilihan);
+    if(pilihan=='a'){ harga=18000; tambahBelanja("Stop Kontak 3 Lubang",harga); }
+    else if(pilihan=='b'){ harga=22000; tambahBelanja("Stop Kontak 4 Lubang",harga); }
+    else if(pilihan=='c'){ harga=25000; tambahBelanja("Stop Kontak + Saklar",harga); }
+    else if(pilihan=='d'){ harga=28000; tambahBelanja("Stop Kontak Kabel 1.5m",harga); }
+    else if(pilihan=='e'){ harga=7000; tambahBelanja("Stop Kontak T",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubStopKontak();
 
-    if(pilihan == 'a'){
-        harga = 18000;
-        printf("Harga Stop kontak 3 lubang: %d\n", harga);
-        tambahBelanja("Stop kontak 3 lubang", harga);
-    }
-    else if(pilihan == 'b'){
-        harga = 22000;
-        printf("Harga Stop kontak 4 lubang: %d\n", harga);
-        tambahBelanja("Stop kontak 4 lubang", harga);
-    }
-    else if(pilihan == 'c'){
-        harga = 25000;
-        printf("Harga Stop kontak + saklar: %d\n", harga);
-        tambahBelanja("Stop kontak + saklar", harga);
-    }
-    else if(pilihan == 'd'){
-        harga = 28000;
-        printf("Harga Stop kontak kabel 1.5m: %d\n", harga);
-        tambahBelanja("Stop kontak kabel 1.5m", harga);
-    }
-    else if(pilihan == 'e'){
-        harga = 7000;
-        printf("Harga Stop kontak T (3-way): %d\n", harga);
-        tambahBelanja("Stop kontak T (3-way)", harga);
-    }
-    else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-    }
-    else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else{
-        printf("Pilihan tidak valid.\n");
-        SubStopKontak();
-    }
+    printf("Ketik K untuk pesan Stop Kontak lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubStopKontak();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    if(pilihan=='a'||pilihan=='b'||pilihan=='c'||pilihan=='d'||pilihan=='e'){
-        printf("Ingin memesan Stop Kontak lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubStopKontak();
-        }
-        else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        }
-        else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return 1;
+    return 0;
 }
+
+
 
 int SubSpeaker(){
+    header("Berikut pilihan Speaker Portable yang dapat anda pilih:");
     char pilihan;
     int harga;
 
-    printf("Berikut pilihan Speaker Portable yang dapat anda pilih:\n");
-    printf("Jenis Speaker:\n"
-           "a. Speaker mini\n"
-           "b. Speaker bluetooth kecil\n"
-           "c. Speaker cube\n"
-           "d. Speaker bass kecil\n"
-           "e. Speaker waterproof mini\n");
+    printf(
+        "a. Speaker Mini               - Rp25.000\n"
+        "b. BT Kecil                   - Rp35.000\n"
+        "c. Cube                       - Rp40.000\n"
+        "d. Bass                       - Rp45.000\n"
+        "e. Waterproof                 - Rp50.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    printf("Masukkan pilihan Anda (a-e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
+    if(pilihan=='a'){ harga=25000; tambahBelanja("Speaker Mini",harga); }
+    else if(pilihan=='b'){ harga=35000; tambahBelanja("Speaker Bluetooth Kecil",harga); }
+    else if(pilihan=='c'){ harga=40000; tambahBelanja("Speaker Cube",harga); }
+    else if(pilihan=='d'){ harga=45000; tambahBelanja("Speaker Bass",harga); }
+    else if(pilihan=='e'){ harga=50000; tambahBelanja("Speaker Waterproof",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubSpeaker();
 
-    if(pilihan == 'a'){
-        harga = 25000;
-        printf("Harga Speaker mini: %d\n", harga);
-        tambahBelanja("Speaker mini", harga);
-    }
-    else if(pilihan == 'b'){
-        harga = 35000;
-        printf("Harga Speaker bluetooth kecil: %d\n", harga);
-        tambahBelanja("Speaker bluetooth kecil", harga);
-    }
-    else if(pilihan == 'c'){
-        harga = 40000;
-        printf("Harga Speaker cube: %d\n", harga);
-        tambahBelanja("Speaker cube", harga);
-    }
-    else if(pilihan == 'd'){
-        harga = 45000;
-        printf("Harga Speaker bass kecil: %d\n", harga);
-        tambahBelanja("Speaker bass kecil", harga);
-    }
-    else if(pilihan == 'e'){
-        harga = 50000;
-        printf("Harga Speaker waterproof mini: %d\n", harga);
-        tambahBelanja("Speaker waterproof mini", harga);
-    }
-    else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-    }
-    else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-    }
-    else{
-        printf("Pilihan tidak valid.\n");
-        SubSpeaker();
-    }
+    printf("Ketik K untuk pesan Speaker Portable lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubSpeaker();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    if(pilihan=='a'||pilihan=='b'||pilihan=='c'||pilihan=='d'||pilihan=='e'){
-        printf("Ingin memesan Speaker lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k'){
-            SubSpeaker();
-        }
-        else if(pilihan == 'X' || pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        }
-        else if(pilihan == 'U' || pilihan == 'u'){
-            main();
-        }
-    }
-
-    return 1;
+    return 0;
 }
+
 
 int SubSmartwatch(){
+    header("Berikut pilihan Smartwatch yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan Smartwatch yang dapat anda pilih:\n");
-    printf("Jenis Smartwatch:\n"
-        "a. Samsung Galaxy Watch8 Classic\n"
-        "b. Xiaomi Smart Band 9\n"
-        "c. Huawei Watch Fit 4\n"
-        "d. Imoo Smart Watch Phone Z7\n"
-        "e. Garmin Venu X1 010-02980-13\n");
-    printf("Masukkan pilihan Anda (a–e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
     int harga;
-    pilihan = tolower(pilihan);
 
-    if(pilihan == 'a'){
-        harga = 6999000;
-        printf("Harga Samsung Galaxy Watch8 Classic: %d\n", harga);
-        tambahBelanja("Samsung Galaxy Watch8 Classic", harga);
+    printf(
+        "a. Samsung Watch8 Classic      - Rp6.999.000\n"
+        "b. Xiaomi Smart Band 9         - Rp569.000\n"
+        "c. Huawei Watch Fit 4          - Rp859.000\n"
+        "d. Imoo Z7                     - Rp2.999.000\n"
+        "e. Garmin Venu X1              - Rp13.439.000\n"
+    );
 
-    } else if(pilihan == 'b'){
-        harga = 569000;
-        printf("Harga Xiaomi Smart Band 9: %d\n", harga);
-        tambahBelanja("Xiaomi Smart Band 9", harga);
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 859000;
-        printf("Harga Huawei Watch Fit 4: %d\n", harga);
-        tambahBelanja("Huawei Watch Fit 4", harga);
+    if(pilihan=='a'){ harga=6999000; tambahBelanja("Samsung Watch8 Classic",harga); }
+    else if(pilihan=='b'){ harga=569000; tambahBelanja("Xiaomi Smart Band 9",harga); }
+    else if(pilihan=='c'){ harga=859000; tambahBelanja("Huawei Watch Fit 4",harga); }
+    else if(pilihan=='d'){ harga=2999000; tambahBelanja("Imoo Z7",harga); }
+    else if(pilihan=='e'){ harga=13439000; tambahBelanja("Garmin Venu X1",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubSmartwatch();
 
-    } else if(pilihan == 'd'){
-        harga = 2999000;
-        printf("Harga Imoo Smart Watch Phone Z7: %d\n", harga);
-        tambahBelanja("Imoo Smart Watch Phone Z7", harga);
+    printf("Ketik K untuk pesan Smartwatch lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
+    if(tolower(pilihan)=='k') return SubSmartwatch();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'e'){
-        harga = 13439000;
-        printf("Harga Garmin Venu X1 010-02980-13: %d\n", harga);
-        tambahBelanja("Garmin Venu X1 010-02980-13", harga);
-
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubSmartwatch();
-    }
-
-    if(pilihan=='a'||pilihan=='b'||pilihan=='c'||pilihan=='d'||pilihan=='e'){
-        printf("Ingin memesan Smartwatch lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k') {
-          SubSmartwatch();
-        }
-        else if(pilihan == 'X' || pilihan == 'x'){ 
-          printf("Terima kasih telah menggunakan program ini.\n");
-          cetakStruk(); 
-        }
-        else if(pilihan == 'U' || pilihan == 'u'){
-           main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubDrone(){
+    header("Berikut pilihan Drone yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan Drone yang dapat anda pilih:\n");
-    printf("Jenis Drone:\n"
-        "a. DJI Mini 4K Drone\n"
-        "b. DJI Mini 5 Pro Fly More Combo\n"
-        "c. DJI Neo Basic Drone\n"
-        "d. Huawei A22 PRO GPS\n"
-        "e. Brica B-Pro 5 Sky Explorer Drone\n");
-    printf("Masukkan pilihan Anda (a–e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 4939000;
-        printf("Harga DJI Mini 4K Drone: %d\n", harga);
-        tambahBelanja("DJI Mini 4K Drone", harga);
+    printf(
+        "a. DJI Mini 4K              - Rp4.939.000\n"
+        "b. DJI Mini 5 Pro Combo     - Rp17.090.000\n"
+        "c. DJI Neo Basic            - Rp3.000.000\n"
+        "d. Huawei A22 PRO GPS       - Rp1.373.000\n"
+        "e. Brica Sky Explorer       - Rp1.645.000\n"
+    );
 
-    } else if(pilihan == 'b'){
-        harga = 17090000;
-        printf("Harga DJI Mini 5 Pro Fly More Combo: %d\n", harga);
-        tambahBelanja("DJI Mini 5 Pro Fly More Combo", harga);
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan = tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 3000000;
-        printf("Harga DJI Neo Basic Drone: %d\n", harga);
-        tambahBelanja("DJI Neo Basic Drone", harga);
+    if(pilihan=='a'){ harga=4939000; tambahBelanja("DJI Mini 4K",harga); }
+    else if(pilihan=='b'){ harga=17090000; tambahBelanja("DJI Mini 5 Pro Combo",harga); }
+    else if(pilihan=='c'){ harga=3000000; tambahBelanja("DJI Neo Basic",harga); }
+    else if(pilihan=='d'){ harga=1373000; tambahBelanja("Huawei A22 PRO GPS",harga); }
+    else if(pilihan=='e'){ harga=1645000; tambahBelanja("Brica Sky Explorer",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubDrone();
 
-    } else if(pilihan == 'd'){
-        harga = 1373000;
-        printf("Harga Huawei A22 PRO GPS: %d\n", harga);
-        tambahBelanja("Huawei A22 PRO GPS", harga);
+    printf("Ketik K untuk pesan Drone lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 1645000;
-        printf("Harga Brica B-Pro 5 Sky Explorer Drone: %d\n", harga);
-        tambahBelanja("Brica B-Pro 5 Sky Explorer Drone", harga);
+    if(tolower(pilihan)=='k') return SubDrone();
+    else if(tolower(pilihan)=='x') cetakStruk();
+    else if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubDrone();
-    }
-
-    if(pilihan >= 'a' && pilihan <= 'e'){
-        printf("Ingin memesan Drone lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k') {
-          SubDrone();
-        }
-        else if(pilihan == 'X' || pilihan == 'x'){ 
-          printf("Terima kasih telah menggunakan program ini.\n");
-          cetakStruk(); 
-        }
-        else if(pilihan == 'U' || pilihan == 'u') {
-          main();
-        } 
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubTablet(){
+    header("Berikut pilihan Tablet yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan Tablet yang dapat anda pilih:\n");
-    printf("Jenis Tablet:\n"
-        "a. Huawei MatePad 11.5\n"
-        "b. OPPO Pad SE 4+128GB\n"
-        "c. Samsung Galaxy Tab A9\n"
-        "d. Xiaomi Redmi Pad SE\n"
-        "e. Apple iPad Pro 11\n");
-    printf("Masukkan pilihan Anda (a–e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 5979000;
-        printf("Harga Huawei MatePad 11.5: %d\n", harga);
-        tambahBelanja("Huawei MatePad 11.5", harga);
+    printf(
+        "a. Huawei MatePad 11.5        - Rp5.979.000\n"
+        "b. OPPO Pad SE 4/128          - Rp2.999.000\n"
+        "c. Samsung Tab A9             - Rp1.775.000\n"
+        "d. Xiaomi Redmi Pad SE        - Rp1.649.000\n"
+        "e. iPad Pro 11                - Rp23.999.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
 
-    } else if(pilihan == 'b'){
-        harga = 2999000;
-        printf("Harga OPPO Pad SE 4+128GB: %d\n", harga);
-        tambahBelanja("OPPO Pad SE 4+128GB", harga);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 1775000;
-        printf("Harga Samsung Galaxy Tab A9: %d\n", harga);
-        tambahBelanja("Samsung Galaxy Tab A9", harga);
+    if(pilihan=='a'){ harga=5979000; tambahBelanja("Huawei MatePad 11.5",harga);}
+    else if(pilihan=='b'){ harga=2999000; tambahBelanja("OPPO Pad SE 4/128",harga); }
+    else if(pilihan=='c'){ harga=1775000; tambahBelanja("Samsung Tab A9",harga); }
+    else if(pilihan=='d'){ harga=1649000; tambahBelanja("Xiaomi Redmi Pad SE",harga); }
+    else if(pilihan=='e'){ harga=23999000; tambahBelanja("iPad Pro 11",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubTablet();
 
-    } else if(pilihan == 'd'){
-        harga = 1649000;
-        printf("Harga Xiaomi Redmi Pad SE: %d\n", harga);
-        tambahBelanja("Xiaomi Redmi Pad SE", harga);
+    printf("Ketik K untuk pesan Tablet lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 23999000;
-        printf("Harga Apple iPad Pro 11: %d\n", harga);
-        tambahBelanja("Apple iPad Pro 11", harga);
+    if(tolower(pilihan)=='k') return SubTablet();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubTablet();
-    }
-
-    if(pilihan >= 'a' && pilihan <= 'e'){
-        printf("Ingin memesan Tablet lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k') {
-          SubTablet();
-          }
-        else if(pilihan == 'X' || pilihan == 'x'){ 
-          printf("Terima kasih telah menggunakan program ini.\n");
-           cetakStruk(); 
-          }
-        else if(pilihan == 'U' || pilihan == 'u') {
-          main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubMonitor(){
+    header("Berikut pilihan Monitor yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan Monitor yang dapat anda pilih:\n");
-    printf("Jenis Monitor:\n"
-        "a. LG 24MR400-B 24 Inch IPS FHD\n"
-        "b. Xiaomi 2K Monitor A27Qi\n"
-        "c. LG 19M38A 19 Inch LED\n"
-        "d. HGFRTEE Portable Monitor 15.6 Inch IPS FHD\n"
-        "e. Philips LED 241v8b 24 Inch\n");
-    printf("Masukkan pilihan Anda (a–e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 1268250;
-        printf("Harga LG 24MR400-B: %d\n", harga);
-        tambahBelanja("LG 24MR400-B 24 Inch IPS FHD", harga);
+    printf(
+        "a. LG 24MR400-B 24\"         - Rp1.268.250\n"
+        "b. Xiaomi A27Qi 2K          - Rp2.696.500\n"
+        "c. LG 19M38A                - Rp1.099.800\n"
+        "d. HGFRTEE Portable 15.6\"   - Rp909.000\n"
+        "e. Philips 241v8b           - Rp1.382.250\n"
+    );
+    garis();
 
-    } else if(pilihan == 'b'){
-        harga = 2696500;
-        printf("Harga Xiaomi 2K Monitor A27Qi: %d\n", harga);
-        tambahBelanja("Xiaomi 2K Monitor A27Qi", harga);
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 1099800;
-        printf("Harga LG 19M38A 19 Inch LED: %d\n", harga);
-        tambahBelanja("LG 19M38A 19 Inch LED", harga);
+    if(pilihan=='a'){ harga=1268250; tambahBelanja("LG 24MR400-B",harga); }
+    else if(pilihan=='b'){ harga=2696500; tambahBelanja("Xiaomi A27Qi 2K",harga); }
+    else if(pilihan=='c'){ harga=1099800; tambahBelanja("LG 19M38A",harga); }
+    else if(pilihan=='d'){ harga=909000; tambahBelanja("HGFRTEE Portable",harga); }
+    else if(pilihan=='e'){ harga=1382250; tambahBelanja("Philips 241v8b",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubMonitor();
 
-    } else if(pilihan == 'd'){
-        harga = 909000;
-        printf("Harga HGFRTEE Portable Monitor: %d\n", harga);
-        tambahBelanja("HGFRTEE Portable Monitor 15.6 Inch IPS FHD", harga);
+    printf("Ketik K untuk pesan Monitor lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 1382250;
-        printf("Harga Philips LED 241v8b 24 Inch: %d\n", harga);
-        tambahBelanja("Philips LED 241v8b 24 Inch", harga);
+    if(tolower(pilihan)=='k') return SubMonitor();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubMonitor();
-    }
-
-    if(pilihan >= 'a' && pilihan <= 'e'){
-        printf("Ingin memesan Monitor lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k') {
-        SubMonitor();
-        }
-        else if(pilihan == 'X' || pilihan == 'x'){ 
-          printf("Terima kasih telah menggunakan program ini.\n"); 
-          cetakStruk(); 
-        }
-        else if(pilihan == 'U' || pilihan == 'u') {
-          main();
-        }
-    }
-    return pilihan;
+    return 0;
 }
+
 
 int SubWirelessEarphone(){
+    header("Berikut pilihan Wireless Earphone yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan Wireless Earphone yang dapat anda pilih:\n");
-    printf("Jenis Wireless Earphone:\n"
-        "a. Apple AirPods Pro\n"
-        "b. Baseus WM01\n"
-        "c. JBL Wave Buds 2\n"
-        "d. QKZ CK5 HiFi In-Ear\n"
-        "e. TWS Pro 4 Wireless Earbuds\n");
-    printf("Masukkan pilihan Anda (a–e)\n"
-           "Ketik U untuk ke Menu Utama\n"
-           "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 3499000;
-        printf("Harga Apple AirPods Pro: %d\n", harga);
-        tambahBelanja("Apple AirPods Pro", harga);
+    printf(
+        "a. AirPods Pro              - Rp3.499.000\n"
+        "b. Baseus WM01             - Rp170.000\n"
+        "c. JBL Wave Buds 2         - Rp1.169.100\n"
+        "d. QKZ CK5 HiFi            - Rp34.200\n"
+        "e. TWS Pro 4               - Rp39.800\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
 
-    } else if(pilihan == 'b'){
-        harga = 170000;
-        printf("Harga Baseus WM01: %d\n", harga);
-        tambahBelanja("Baseus True Wireless Bluetooth WM01", harga);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 1169100;
-        printf("Harga JBL Wave Buds 2: %d\n", harga);
-        tambahBelanja("JBL Wave Buds 2", harga);
+    if(pilihan=='a'){ harga=3499000; tambahBelanja("AirPods Pro",harga); }
+    else if(pilihan=='b'){ harga=170000; tambahBelanja("Baseus WM01",harga); }
+    else if(pilihan=='c'){ harga=1169100; tambahBelanja("JBL Wave Buds 2",harga); }
+    else if(pilihan=='d'){ harga=34200; tambahBelanja("QKZ CK5 HiFi",harga); }
+    else if(pilihan=='e'){ harga=39800; tambahBelanja("TWS Pro 4",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubWirelessEarphone();
 
-    } else if(pilihan == 'd'){
-        harga = 34200;
-        printf("Harga QKZ CK5 HiFi In-Ear: %d\n", harga);
-        tambahBelanja("QKZ CK5 HiFi In-Ear Earphones", harga);
+    printf("Ketik K untuk pesan Wireless Earphone lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 39800;
-        printf("Harga TWS Pro 4 Wireless Earbuds: %d\n", harga);
-        tambahBelanja("TWS Pro 4 Wireless Earbuds", harga);
+    if(tolower(pilihan)=='k') return SubWirelessEarphone();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'X' || pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'U' || pilihan == 'u'){
-        main();
-
-    } else {
-        printf("Pilihan tidak valid.\n");
-        SubWirelessEarphone();
-    }
-
-    if(pilihan >= 'a' && pilihan <= 'e'){
-        printf("Ingin memesan Wireless Earphone lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-
-        if(pilihan == 'K' || pilihan == 'k') {
-          SubWirelessEarphone();
-        }
-        else if(pilihan == 'X' || pilihan == 'x'){ 
-          printf("Terima kasih telah menggunakan program ini.\n"); 
-          cetakStruk(); 
-        }
-        else if(pilihan == 'U' || pilihan == 'u') {
-          main();
-        }
-    }
-    return pilihan;
+    return 0;
 }
+
 
 int SubLaptop(){
+    header("Berikut pilihan Laptop yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan laptop yang dapat anda pilih:\n");
-    printf("Jenis Laptop:\n"
-        "a. Laptop LOQ\n"
-        "b. Laptop TUF\n"
-        "c. Laptop ASUS\n"
-        "d. Laptop MSI\n"
-        "e. Laptop Macbook\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 14000000;
-        printf("Harga Laptop LOQ: %d\n", harga);
-        tambahBelanja("Laptop LOQ", harga);
+    printf(
+        "a. Laptop LOQ     - Rp14.000.000\n"
+        "b. Laptop TUF     - Rp17.000.000\n"
+        "c. Laptop ASUS    - Rp11.000.000\n"
+        "d. Laptop MSI     - Rp9.500.000\n"
+        "e. Laptop Macbook - Rp10.000.000\n"
+    );
 
-    } else if(pilihan == 'b' ){
-        harga = 17000000;
-        printf("Harga Laptop TUF: %d\n", harga);
-        tambahBelanja("Laptop TUF", harga);
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
 
-    } else if(pilihan == 'c'){
-        harga = 11000000;
-        printf("Harga Laptop ASUS: %d\n", harga);
-        tambahBelanja("Laptop ASUS", harga);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'd'){
-        harga = 9500000;
-        printf("Harga Laptop MSI: %d\n", harga);
-        tambahBelanja("Laptop MSI", harga);
+    if(pilihan=='a'){ harga=14000000; tambahBelanja("Laptop LOQ",harga); }
+    else if(pilihan=='b'){ harga=17000000; tambahBelanja("Laptop TUF",harga); }
+    else if(pilihan=='c'){ harga=11000000; tambahBelanja("Laptop ASUS",harga); }
+    else if(pilihan=='d'){ harga=9500000; tambahBelanja("Laptop MSI",harga); }
+    else if(pilihan=='e'){ harga=10000000; tambahBelanja("Laptop Macbook",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubLaptop();
 
-    } else if(pilihan == 'e'){
-        harga = 10000000;
-        printf("Harga Laptop Macbook: %d\n", harga);
-        tambahBelanja("Laptop Macbook", harga);
+    printf("Ketik K untuk pesan Laptop lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
+    if(tolower(pilihan)=='k') return SubLaptop();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubLaptop();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan laptop lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'k'){
-            SubLaptop();
-        } else if(pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubHP(){
+    header("Berikut pilihan Handphone yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan HP yang dapat anda pilih:\n");
-    printf("Jenis HP:\n"
-        "a. HP Samsung\n"
-        "b. HP iPhone\n"
-        "c. HP Oppo\n"
-        "d. HP Vivo\n"
-        "e. HP Advan\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 2300000;
-        printf("Harga HP Samsung: %d\n", harga);
-        tambahBelanja("HP Samsung", harga);
+    printf(
+        "a. Samsung   - Rp2.300.000\n"
+        "b. iPhone    - Rp2.400.000\n"
+        "c. Oppo      - Rp2.700.000\n"
+        "d. Vivo      - Rp3.500.000\n"
+        "e. Advan     - Rp2.500.000\n"
+    );
+    garis();
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
 
-    } else if(pilihan == 'b' ){
-        harga = 2400000;
-        printf("Harga HP iPhone: %d\n", harga);
-        tambahBelanja("HP iPhone", harga);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 2700000;
-        printf("Harga HP Oppo: %d\n", harga);
-        tambahBelanja("HP Oppo", harga);
+    if(pilihan=='a'){ harga=2300000; tambahBelanja("HP Samsung",harga); }
+    else if(pilihan=='b'){ harga=2400000; tambahBelanja("HP iPhone",harga); }
+    else if(pilihan=='c'){ harga=2700000; tambahBelanja("HP Oppo",harga); }
+    else if(pilihan=='d'){ harga=3500000; tambahBelanja("HP Vivo",harga); }
+    else if(pilihan=='e'){ harga=2500000; tambahBelanja("HP Advan",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubHP();
 
-    } else if(pilihan == 'd'){
-        harga = 3500000;
-        printf("Harga HP Vivo: %d\n", harga);
-        tambahBelanja("HP Vivo", harga);
+    printf("Ketik K untuk pesan Handphone lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 2500000;
-        printf("Harga HP Advan: %d\n", harga);
-        tambahBelanja("HP Advan", harga);
+    if(tolower(pilihan)=='k') return SubHP();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubHP();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan HP lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'k'){
-            SubHP();
-        } else if(pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubBlender(){
+    header("Berikut pilihan Blender yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan blender yang dapat anda pilih:\n");
-    printf("Jenis Blender:\n"
-        "a. Blender GP\n"
-        "b. Blender ZA\n"
-        "c. Blender CA\n"
-        "d. Blender DA\n"
-        "e. Blender BC\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 175000;
-        printf("Harga Blender GP: %d\n", harga);
-        tambahBelanja("Blender GP", harga);
+    printf(
+        "a. Blender GP - Rp175.000\n"
+        "b. Blender ZA - Rp274.000\n"
+        "c. Blender CA - Rp135.000\n"
+        "d. Blender DA - Rp155.000\n"
+        "e. Blender BC - Rp150.000\n"
+    );
+    garis();
 
-    } else if(pilihan == 'b' ){
-        harga = 274000;
-        printf("Harga Blender ZA: %d\n", harga);
-        tambahBelanja("Blender ZA", harga);
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 135000;
-        printf("Harga Blender CA: %d\n", harga);
-        tambahBelanja("Blender CA", harga);
+    if(pilihan=='a'){ harga=175000; tambahBelanja("Blender GP",harga); }
+    else if(pilihan=='b'){ harga=274000; tambahBelanja("Blender ZA",harga); }
+    else if(pilihan=='c'){ harga=135000; tambahBelanja("Blender CA",harga); }
+    else if(pilihan=='d'){ harga=155000; tambahBelanja("Blender DA",harga); }
+    else if(pilihan=='e'){ harga=150000; tambahBelanja("Blender BC",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubBlender();
 
-    } else if(pilihan == 'd'){
-        harga = 155000;
-        printf("Harga Blender DA: %d\n", harga);
-        tambahBelanja("Blender DA", harga);
+    printf("Ketik K untuk pesan Blender lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 150000;
-        printf("Harga Blender BC: %d\n", harga);
-        tambahBelanja("Blender BC", harga);
+    if(tolower(pilihan)=='k') return SubBlender();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubBlender();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan blender lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'k'){
-            SubBlender();
-        } else if(pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubRicecooker(){
+    header("Berikut pilihan Rice Cooker yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan rice cooker yang dapat anda pilih:\n");
-    printf("Jenis Rice Cooker:\n"
-        "a. Rice Cooker 17KI\n"
-        "b. Rice Cooker 12II\n"
-        "c. Rice Cooker 14AC\n"
-        "d. Rice Cooker 15CD\n"
-        "e. Rice Cooker 17ZA\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 255000;
-        printf("Harga Rice Cooker 17KI: %d\n", harga);
-        tambahBelanja("Rice Cooker 17KI", harga);
+    printf(
+        "a. RC 17KI - Rp255.000\n"
+        "b. RC 12II - Rp240.000\n"
+        "c. RC 14AC - Rp325.000\n"
+        "d. RC 15CD - Rp270.000\n"
+        "e. RC 17ZA - Rp250.000\n"
+    );
+    garis();
 
-    } else if(pilihan == 'b' ){
-        harga = 240000;
-        printf("Harga Rice Cooker 12II: %d\n", harga);
-        tambahBelanja("Rice Cooker 12II", harga);
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c",&pilihan);
+    pilihan=tolower(pilihan);
 
-    } else if(pilihan == 'c'){
-        harga = 325000;
-        printf("Harga Rice Cooker 14AC: %d\n", harga);
-        tambahBelanja("Rice Cooker 14AC", harga);
+    if(pilihan=='a'){ harga=255000; tambahBelanja("Rice Cooker 17KI",harga); }
+    else if(pilihan=='b'){ harga=240000; tambahBelanja("Rice Cooker 12II",harga); }
+    else if(pilihan=='c'){ harga=325000; tambahBelanja("Rice Cooker 14AC",harga); }
+    else if(pilihan=='d'){ harga=270000; tambahBelanja("Rice Cooker 15CD",harga); }
+    else if(pilihan=='e'){ harga=250000; tambahBelanja("Rice Cooker 17ZA",harga); }
+    else if(pilihan=='x') cetakStruk();
+    else if(pilihan=='u') pemilihan();
+    else return SubRicecooker();
 
-    } else if(pilihan == 'd'){
-        harga = 270000;
-        printf("Harga Rice Cooker 15CD: %d\n", harga);
-        tambahBelanja("Rice Cooker 15CD", harga);
+    printf("Ketik K untuk pesan Rice Cooker lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'e'){
-        harga = 250000;
-        printf("Harga Rice Cooker 17ZA: %d\n", harga);
-        tambahBelanja("Rice Cooker 17ZA", harga);
+    if(tolower(pilihan)=='k') return SubRicecooker();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
-
-    } else if(pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubRicecooker();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan rice cooker lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'k'){
-            SubRicecooker();
-        } else if(pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
+
 
 int SubPowerbank(){
+    header("Berikut pilihan Power Bank yang dapat anda pilih:");
     char pilihan;
-    printf("Berikut pilihan power bank yang dapat anda pilih:\n");
-    printf("Jenis Power Bank:\n"
-        "a. Power Bank 18C\n"
-        "b. Power Bank 19C\n"
-        "c. Power Bank 20C\n"
-        "d. Power Bank 21C\n"
-        "e. Power Bank 22C\n");
-    printf("Masukkan pilihan Anda (a-e)\n"
-        "Ketik U untuk ke Menu Utama\n"
-        "Ketik X untuk selesai: ");
-
-    scanf(" %c", &pilihan);
-    pilihan = tolower(pilihan);
     int harga;
 
-    if(pilihan == 'a'){
-        harga = 250000;
-        printf("Harga Power Bank 18C: %d\n", harga);
-        tambahBelanja("Power Bank 18C", harga);
+    printf(
+        "a. Power Bank 18C - Rp250.000\n"
+        "b. Power Bank 19C - Rp270.000\n"
+        "c. Power Bank 20C - Rp320.000\n"
+        "d. Power Bank 21C - Rp350.000\n"
+        "e. Power Bank 22C - Rp300.000\n"
 
-    } else if(pilihan == 'b' ){
-        harga = 270000;
-        printf("Harga Power Bank 19C: %d\n", harga);
-        tambahBelanja("Power Bank 19C", harga);
+    );
+    garis();
 
-    } else if(pilihan == 'c'){
-        harga = 320000;
-        printf("Harga Power Bank 20C: %d\n", harga);
-        tambahBelanja("Power Bank 20C", harga);
+    printf(GREEN "Masukkan pilihan Anda: " RESET);
+    scanf(" %c", &pilihan);
+    pilihan = tolower(pilihan);
 
-    } else if(pilihan == 'd'){
-        harga = 350000;
-        printf("Harga Power Bank 21C: %d\n", harga);
-        tambahBelanja("Power Bank 21C", harga);
+    if (pilihan=='a'){ harga = 250000; tambahBelanja("Power Bank 18C", harga);}
+    else if (pilihan=='b'){ harga = 270000; tambahBelanja("Power Bank 19C", harga);}
+    else if (pilihan=='c'){ harga = 320000; tambahBelanja("Power Bank 20C", harga);}
+    else if (pilihan=='d'){ harga = 350000; tambahBelanja("Power Bank 21C", harga);}
+    else if (pilihan=='e'){ harga = 300000; tambahBelanja("Power Bank 22C", harga);}
+    else if (pilihan=='x') cetakStruk();
+    else if (pilihan=='u') pemilihan();
+    else return SubPowerbank();
 
-    } else if(pilihan == 'e'){
-        harga = 300000;
-        printf("Harga Power Bank 22C: %d\n", harga);
-        tambahBelanja("Power Bank 22C", harga);
+    printf("Ketik K untuk pesan Power Bank lagi, U untuk ke Menu Utama, X untuk selesai: ");
+    scanf(" %c",&pilihan);
 
-    } else if(pilihan == 'x'){
-        printf("Terima kasih telah menggunakan program ini.\n");
-        cetakStruk();
+    if(tolower(pilihan)=='k') return SubPowerbank();
+    if(tolower(pilihan)=='x') cetakStruk();
+    if(tolower(pilihan)=='u') pemilihan();
 
-    } else if(pilihan == 'u'){
-        main();
-    }
-    else {
-        printf("Pilihan tidak valid.\n");
-        SubPowerbank();
-    }
-
-    if(pilihan == 'a' || pilihan == 'b' || pilihan == 'c' || pilihan == 'd' || pilihan == 'e'){
-        printf("Ingin memesan power bank lagi? (Ketik K untuk ya, U untuk ke Menu Utama, X untuk selesai): ");
-        scanf(" %c", &pilihan);
-        if(pilihan == 'k'){
-            SubPowerbank();
-        } else if(pilihan == 'x'){
-            printf("Terima kasih telah menggunakan program ini.\n");
-            cetakStruk();
-        } else if(pilihan == 'u'){
-            main();
-        }
-    }
-
-    return pilihan;
+    return 0;
 }
 
-int main(){
-    int pilihanbesar = tampilkanMenu();
 
-    switch(pilihanbesar){
-        case 1: 
-        SubKulkas(); 
-        break;
-        case 2: 
-        SubCuci(); 
-        break;
-        case 3: 
-        SubAc(); 
-        break;
-        case 4: 
-        SubTV(); 
-        break;
-        case 5: 
-        SubKompor(); 
-        break;
-        case 6: 
-        SubLampu(); 
-        break;
-        case 7: 
-        SubKipas(); 
-        break;
-        case 8: 
-        SubSenter(); 
-        break;
-        case 9: 
-        SubStopKontak(); 
-        break;
-        case 10: 
-        SubSpeaker(); 
-        break;
-        case 11: 
-        SubSmartwatch();
-        break;
-        case 12: 
-        SubDrone();
-        break;
-        case 13:
-        SubTablet();
-        break;
-        case 14:
-        SubMonitor();
-        break;
-        case 15:
-        SubWirelessEarphone();
-        break;
-        case 16:
-        SubLaptop();
-        break;
-        case 17:
-        SubHP();
-        break;
-        case 18:
-        SubBlender();
-        break;
-        case 19:
-        SubRicecooker();
-        break;
-        case 20:
-        SubPowerbank();
-        break;
-        case 21: 
-        cetakStruk(); 
-        break;
 
+int pemilihan(){
+    int pilih = tampilkanMenu();
+
+    switch(pilih){
+        case 1: SubKulkas(); break;
+        case 2: SubCuci(); break;
+        case 3: SubAc(); break;
+        case 4: SubTV(); break;
+        case 5: SubKompor(); break;
+        case 6: SubLampu(); break;
+        case 7: SubKipas(); break;
+        case 8: SubSenter(); break;
+        case 9: SubStopKontak(); break;
+        case 10: SubSpeaker(); break;
+        case 11: SubSmartwatch(); break;
+        case 12: SubDrone(); break;
+        case 13: SubTablet(); break;
+        case 14: SubMonitor(); break;
+        case 15: SubWirelessEarphone(); break;
+        case 16: SubLaptop(); break;
+        case 17: SubHP(); break;
+        case 18: SubBlender(); break;
+        case 19: SubRicecooker(); break;
+        case 20: SubPowerbank(); break;
+        case 21: cetakStruk(); break;
         default:
-            printf("Pilihan tidak valid.\n");
-            main();
+            printf("Pilihan tidak valid!\n");
+            pemilihan();
+            break;
     }
+
+    return 0;
+}
+
+
+int main(){
+
+    header("        Selamat Datang di Toko Elektronik Kami!");
+
+    printf("Promo Bonus Belanja berdasarkan total pembelian:\n\n");
+    printf("PAKET 1  | Belanja Rp 3.000.000 - 9.999.999\n");
+    printf("Bonus    : Lampu LED 10 Watt\n\n");
+
+    printf("PAKET 2  | Belanja Rp 10.000.000 - 19.999.999\n");
+    printf("Bonus    : Speaker Bluetooth Mini\n\n");
+
+    printf("PAKET 3  | Belanja Rp 20.000.000 - 29.999.999\n");
+    printf("Bonus    : Smart Band Xiaomi Smart Band 9\n\n");
+
+    printf("PAKET 4  | Belanja Rp 30.000.000 - 39.999.999\n");
+    printf("Bonus    : Monitor LG 19 Inch (19M38A)\n\n");
+
+    printf("PAKET 5  | Belanja Rp 40.000.000 - 59.999.999\n");
+    printf("Bonus    : Tablet OPPO Pad SE (4/128)\n\n");
+
+    printf("PAKET 6  | Belanja Rp 60.000.000 - 79.999.999\n");
+    printf("Bonus    : Kulkas 1 Pintu\n\n");
+
+    printf("PAKET 7  | Belanja Rp 80.000.000 atau lebih\n");
+    printf("Bonus    : Kulkas 2 Pintu\n\n");
+
+
+    garis();
+    printf("Tekan ENTER untuk melanjutkan...");
+    scanf("%*c");
+    garis();
+    printf("Silakan mulai memilih barang:\n");
+
+    pemilihan();
 
     return 0;
 }
