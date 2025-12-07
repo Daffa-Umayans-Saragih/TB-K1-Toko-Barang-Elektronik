@@ -7,6 +7,11 @@
 #define GREEN   "\033[1;32m"
 #define WHITE   "\033[1;37m"
 
+char namaBarang[100][100];
+int hargaBarang[100];
+int jumlahBarang = 0;
+
+
 void header(const char *judul){
     printf(GREEN "========================================================\n" RESET);
     printf(GREEN "%s\n" RESET, judul);
@@ -14,13 +19,53 @@ void header(const char *judul){
 }
 
 void garis(){
-    printf      ("--------------------------------------------------------\n");
+    printf("--------------------------------------------------------\n");
 }
 
+void simpanHistory(int total){
+    FILE *fp = fopen("history.txt", "a");
+    if (!fp){
+        printf("Gagal membuka file history!\n");
+        return;
+    }
 
-char namaBarang[100][100];
-int hargaBarang[100];
-int jumlahBarang = 0;
+    fprintf(fp, "===== HISTORY BELANJA =====\n");
+    for(int i = 0; i < jumlahBarang; i++){
+        fprintf(fp, "%d. %s - Rp %d\n", i+1, namaBarang[i], hargaBarang[i]);
+    }
+
+    fprintf(fp, "TOTAL BELANJA: Rp %d\n", total);
+
+    // ===== BONUS BERDASARKAN TOTAL BELANJA =====
+    if (total >= 80000000) {
+        fprintf(fp, "BONUS: Kulkas 2 Pintu\n");
+    }
+    else if (total >= 60000000) {
+        fprintf(fp, "BONUS: Kulkas 1 Pintu\n");
+    }
+    else if (total >= 40000000) {
+        fprintf(fp, "BONUS: OPPO Pad SE (4/128)\n");
+    }
+    else if (total >= 30000000) {
+        fprintf(fp, "BONUS: Monitor LG 19M38A\n");
+    }
+    else if (total >= 20000000) {
+        fprintf(fp, "BONUS: Xiaomi Smart Band 9\n");
+    }
+    else if (total >= 10000000) {
+        fprintf(fp, "BONUS: Speaker Bluetooth Mini\n");
+    }
+    else if (total >= 3000000) {
+        fprintf(fp, "BONUS: Lampu LED 10 Watt\n");
+    }
+    else {
+        fprintf(fp, "BONUS: Tidak Ada\n");
+    }
+
+    fprintf(fp, "===========================\n\n");
+    fclose(fp);
+}
+
 
 void tambahBelanja(const char *nama, int harga){
     strcpy(namaBarang[jumlahBarang], nama);
@@ -43,15 +88,31 @@ void cetakStruk(){
     garis();
 
     // BONUS
-    if (total >= 80000000) printf("Selamat anda mendapat bonus Kulkas 2 Pintu\n");
-    else if (total >= 60000000) printf("Selamat anda mendapat bonus Kulkas 1 Pintu\n");
-    else if (total >= 40000000) printf("Selamat anda mendapat bonusOPPO Pad SE (4/128)\n");
-    else if (total >= 30000000) printf("Selamat anda mendapat bonus Monitor LG 19M38A\n");
-    else if (total >= 20000000) printf("Selamat anda mendapat bonus Xiaomi Smart Band 9\n");
-    else if (total >= 10000000) printf("Selamat anda mendapat bonus Speaker Bluetooth Mini\n");
-    else if (total >= 3000000)  printf("Selamat anda mendapat bonus Lampu LED 10 Watt\n");
+    if (total >= 80000000) {
+        printf("Selamat anda mendapat bonus Kulkas 2 Pintu\n");
+    }
+    else if (total >= 60000000) {
+        printf("Selamat anda mendapat bonus Kulkas 1 Pintu\n");
+    }
+    else if (total >= 40000000) {
+        printf("Selamat anda mendapat bonusOPPO Pad SE (4/128)\n");
+    }
+    else if (total >= 30000000) {
+        printf("Selamat anda mendapat bonus Monitor LG 19M38A\n");
+    }
+    else if (total >= 20000000) {
+        printf("Selamat anda mendapat bonus Xiaomi Smart Band 9\n");
+    }
+    else if (total >= 10000000) {
+    printf("Selamat anda mendapat bonus Speaker Bluetooth Mini\n");
+    }
+    else if (total >= 3000000) {
+        printf("Selamat anda mendapat bonus Lampu LED 10 Watt\n");
+    }
 
     header("                        TERIMA KASIH");
+    simpanHistory(total);    
+
     exit(0);
 }
 
@@ -91,8 +152,81 @@ int tampilkanMenu(){
     return pilihanbesar;
 }
 
-int pemilihan(); 
+int pemilihan(){
+    int pilih = tampilkanMenu();
 
+    switch(pilih){
+        case 1: 
+            SubKulkas();
+            break;
+        case 2: 
+            SubCuci(); 
+            break;
+        case 3: 
+            SubAc(); 
+            break;
+        case 4: 
+            SubTV(); 
+            break;
+        case 5:
+            SubKompor(); 
+            break;
+        case 6: 
+            SubLampu(); 
+            break;
+        case 7:    
+            SubKipas(); 
+            break;
+        case 8:     
+            SubSenter();
+            break;
+        case 9:     
+            SubStopKontak();    
+            break;
+        case 10:    
+            SubSpeaker(); 
+            break;
+        case 11:    
+            SubSmartwatch(); 
+            break;
+        case 12:    
+            SubDrone(); 
+            break;
+        case 13: 
+            SubTablet(); 
+            break;
+        case 14: 
+            SubMonitor(); 
+            break;
+        case 15: 
+            SubWirelessEarphone(); 
+            break;
+        case 16: 
+            SubLaptop(); 
+            break;
+        case 17: 
+            SubHP(); 
+            break;
+        case 18: 
+            SubBlender(); 
+            break;
+        case 19:    
+            SubRicecooker(); 
+            break;
+        case 20: 
+            SubPowerbank(); 
+            break;
+        case 21: 
+            cetakStruk(); 
+            break;
+        default:
+            printf("pilihan tidak valid!\n");
+            pemilihan();
+            break;
+    }
+
+    return 0;
+}
 
 
 int SubKulkas(){
@@ -112,24 +246,56 @@ int SubKulkas(){
     scanf(" %c", &pilihan);
     pilihan = tolower(pilihan);
 
-    if(pilihan=='a'){ harga=3000000; tambahBelanja("Kulkas 1 Pintu", harga); }
-    else if(pilihan=='b'){ harga=5000000; tambahBelanja("Kulkas 2 Pintu", harga); }
-    else if(pilihan=='c'){ harga=8000000; tambahBelanja("Side by Side", harga); }
-    else if(pilihan=='d'){ harga=12000000; tambahBelanja("French Door", harga); }
-    else if(pilihan=='e'){ harga=150000; tambahBelanja("Kulkas Mini", harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubKulkas();
+    if(pilihan=='a'){ 
+        harga=3000000; 
+        tambahBelanja("Kulkas 1 Pintu", harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=5000000; 
+        tambahBelanja("Kulkas 2 Pintu", harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=8000000; 
+        tambahBelanja("Side by Side", harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=12000000; 
+        tambahBelanja("French Door", harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=150000; 
+        tambahBelanja("Kulkas Mini", harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubKulkas();
+    }
 
-    printf("Ketik K untuk pesan kulkas lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c", &pilihan);
-    if(tolower(pilihan)=='k') return SubKulkas();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
-
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan kulkas lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c", &pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubKulkas();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubKulkas();
+        }
+    } 
     return 0;
 }
-
 
 
 int SubCuci(){
@@ -150,19 +316,50 @@ int SubCuci(){
     pilihan=tolower(pilihan);
 
     if(pilihan=='a'){ harga=2500000; tambahBelanja("Mesin Cuci Top Loading", harga); }
-    else if(pilihan=='b'){ harga=4000000; tambahBelanja("Mesin Cuci Front Loading", harga); }
-    else if(pilihan=='c'){ harga=1500000; tambahBelanja("Mesin Cuci Semi Automatic", harga); }
-    else if(pilihan=='d'){ harga=1000000; tambahBelanja("Mesin Cuci Portable", harga); }
-    else if(pilihan=='e'){ harga=1800000; tambahBelanja("Mesin Cuci Twin Tub", harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubCuci();
+    else if(pilihan=='b'){ 
+        harga=4000000; 
+        tambahBelanja("Mesin Cuci Front Loading", harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=1500000; 
+        tambahBelanja("Mesin Cuci Semi Automatic", harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=1000000;
+        tambahBelanja("Mesin Cuci Portable", harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=1800000; 
+        tambahBelanja("Mesin Cuci Twin Tub", harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubCuci();
+    }
 
-    printf("Ketik K untuk pesan Mesin Cuci lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubCuci();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Mesin Cuci lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c", &pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubCuci();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubCuci();
+        }
+    }
 
     return 0;
 }
@@ -185,20 +382,53 @@ int SubAc(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=3500000; tambahBelanja("AC Split",harga); }
-    else if(pilihan=='b'){ harga=2500000; tambahBelanja("AC Window",harga); }
-    else if(pilihan=='c'){ harga=3000000; tambahBelanja("AC Portable",harga); }
-    else if(pilihan=='d'){ harga=15000000; tambahBelanja("AC Central",harga); }
-    else if(pilihan=='e'){ harga=12000000; tambahBelanja("AC Ducted",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubAc();
+    if(pilihan=='a'){ 
+        harga=3500000; 
+        tambahBelanja("AC Split",harga); }
+    else if(pilihan=='b'){ 
+        harga=2500000; 
+        tambahBelanja("AC Window",harga);
+    }
+    else if(pilihan=='c'){ 
+        harga=3000000; 
+        tambahBelanja("AC Portable",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=15000000; 
+        tambahBelanja("AC Central",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=12000000; 
+        tambahBelanja("AC Ducted",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubAc();
+    }
 
-    printf("Ketik K untuk pesan AC lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubAc();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan AC lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubAc();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubAc();
+        }
+    }
 
     return 0;
 }
@@ -221,20 +451,53 @@ int SubTV(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=4000000; tambahBelanja("LED TV",harga); }
-    else if(pilihan=='b'){ harga=10000000; tambahBelanja("OLED TV",harga); }
-    else if(pilihan=='c'){ harga=8000000; tambahBelanja("QLED TV",harga); }
-    else if(pilihan=='d'){ harga=6000000; tambahBelanja("Smart TV",harga); }
-    else if(pilihan=='e'){ harga=12000000; tambahBelanja("4K TV",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubTV();
-
-    printf("Ketik K untuk pesan TV lagi, U untuk ke Menu Utama, X untuk selesai:");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubTV();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if(pilihan=='a'){ 
+        harga=4000000; 
+        tambahBelanja("LED TV",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=10000000; 
+        tambahBelanja("OLED TV",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=8000000; 
+        tambahBelanja("QLED TV",harga);
+    }
+    else if(pilihan=='d'){ 
+        harga=6000000; 
+        tambahBelanja("Smart TV",harga); 
+    }
+    else if(pilihan=='e'){
+        harga=12000000; 
+        tambahBelanja("4K TV",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubTV();
+    }
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan TV lagi, U untuk ke Menu Utama, X untuk selesai:");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubTV();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubTV();
+        }
+    }
 
     return 0;
 }
@@ -257,20 +520,54 @@ int SubKompor(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=2000000; tambahBelanja("Kompor Induksi",harga); }
-    else if(pilihan=='b'){ harga=1500000; tambahBelanja("Kompor Halogen",harga); }
-    else if(pilihan=='c'){ harga=1800000; tambahBelanja("Kompor Keramik",harga); }
-    else if(pilihan=='d'){ harga=1000000; tambahBelanja("Kompor Portable",harga); }
-    else if(pilihan=='e'){ harga=2500000; tambahBelanja("Kompor Tanam",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubKompor();
+    if(pilihan=='a'){ 
+        harga=2000000; 
+        tambahBelanja("Kompor Induksi",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=1500000; 
+        tambahBelanja("Kompor Halogen",harga); 
+    }
+    else if(pilihan=='c'){
+        harga=1800000; 
+        tambahBelanja("Kompor Keramik",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=1000000; 
+        tambahBelanja("Kompor Portable",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=2500000; 
+        tambahBelanja("Kompor Tanam",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubKompor();
+    }
 
-    printf("Ketik K untuk pesan Kompor Listrik lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubKompor();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Kompor Listrik lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubKompor();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubKompor();
+        }
+    }
 
     return 0;
 }
@@ -293,21 +590,50 @@ int SubLampu(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=8000; tambahBelanja("Lampu LED 5W",harga); }
-    else if(pilihan=='b'){ harga=12000; tambahBelanja("Lampu LED 8W",harga); }
-    else if(pilihan=='c'){ harga=15000; tambahBelanja("Lampu LED 10W",harga); }
-    else if(pilihan=='d'){ harga=20000; tambahBelanja("Lampu LED 15W",harga); }
-    else if(pilihan=='e'){ harga=24000; tambahBelanja("Lampu LED 20W",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubLampu();
+    if(pilihan=='a'){ 
+        harga=8000; 
+        tambahBelanja("Lampu LED 5W",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=12000; 
+        tambahBelanja("Lampu LED 8W",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=15000; 
+        tambahBelanja("Lampu LED 10W",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=20000; 
+        tambahBelanja("Lampu LED 15W",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=24000; 
+        tambahBelanja("Lampu LED 20W",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubLampu();
+    }
 
-    printf("Ketik K untuk pesan Lampu LED lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubLampu();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
-
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Lampu LED lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubLampu();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+    }
     return 0;
 }
 
@@ -329,20 +655,54 @@ int SubKipas(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=15000; tambahBelanja("Kipas Mini 3W",harga); }
-    else if(pilihan=='b'){ harga=20000; tambahBelanja("Kipas Mini 5W",harga); }
-    else if(pilihan=='c'){ harga=25000; tambahBelanja("Kipas Portable",harga); }
-    else if(pilihan=='d'){ harga=28000; tambahBelanja("Kipas Lipat",harga); }
-    else if(pilihan=='e'){ harga=30000; tambahBelanja("Kipas Mini Stand",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubKipas();
+    if(pilihan=='a'){ 
+        harga=15000; 
+        tambahBelanja("Kipas Mini 3W",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=20000; 
+        tambahBelanja("Kipas Mini 5W",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=25000; 
+        tambahBelanja("Kipas Portable",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=28000; 
+        tambahBelanja("Kipas Lipat",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=30000; 
+        tambahBelanja("Kipas Mini Stand",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubKipas();
+    }
 
-    printf("Ketik K untuk pesan Kipas Angin Mini lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubKipas();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Kipas Mini lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubKipas();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubKipas();
+        }
+    }
 
     return 0;
 }
@@ -365,20 +725,53 @@ int SubSenter(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=12000; tambahBelanja("Senter Mini",harga); }
-    else if(pilihan=='b'){ harga=20000; tambahBelanja("Senter Sedang",harga); }
-    else if(pilihan=='c'){ harga=35000; tambahBelanja("Senter Besar",harga); }
-    else if(pilihan=='d'){ harga=25000; tambahBelanja("Headlamp",harga); }
-    else if(pilihan=='e'){ harga=30000; tambahBelanja("Police LED",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubSenter();
+    if(pilihan=='a'){ 
+        harga=12000; 
+        tambahBelanja("Senter Mini",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=20000; 
+        tambahBelanja("Senter Sedang",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=35000; 
+        tambahBelanja("Senter Besar",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=25000; 
+        tambahBelanja("Headlamp",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=30000; tambahBelanja("Police LED",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubSenter();
+    }
 
-    printf("Ketik K untuk pesan Senter LED lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubSenter();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Senter LED lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubSenter();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubSenter();
+        }
+    }
 
     return 0;
 }
@@ -401,24 +794,57 @@ int SubStopKontak(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=18000; tambahBelanja("Stop Kontak 3 Lubang",harga); }
-    else if(pilihan=='b'){ harga=22000; tambahBelanja("Stop Kontak 4 Lubang",harga); }
-    else if(pilihan=='c'){ harga=25000; tambahBelanja("Stop Kontak + Saklar",harga); }
-    else if(pilihan=='d'){ harga=28000; tambahBelanja("Stop Kontak Kabel 1.5m",harga); }
-    else if(pilihan=='e'){ harga=7000; tambahBelanja("Stop Kontak T",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubStopKontak();
+    if(pilihan=='a'){ 
+        harga=18000; 
+        tambahBelanja("Stop Kontak 3 Lubang",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=22000; 
+        tambahBelanja("Stop Kontak 4 Lubang",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=25000; 
+        tambahBelanja("Stop Kontak + Saklar",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=28000; 
+        tambahBelanja("Stop Kontak Kabel 1.5m",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=7000; 
+        tambahBelanja("Stop Kontak T",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubStopKontak();
+    }
 
-    printf("Ketik K untuk pesan Stop Kontak lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubStopKontak();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Stop Kontak lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubStopKontak();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubStopKontak();
+        }
+    }
 
     return 0;
 }
-
 
 
 int SubSpeaker(){
@@ -438,20 +864,54 @@ int SubSpeaker(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=25000; tambahBelanja("Speaker Mini",harga); }
-    else if(pilihan=='b'){ harga=35000; tambahBelanja("Speaker Bluetooth Kecil",harga); }
-    else if(pilihan=='c'){ harga=40000; tambahBelanja("Speaker Cube",harga); }
-    else if(pilihan=='d'){ harga=45000; tambahBelanja("Speaker Bass",harga); }
-    else if(pilihan=='e'){ harga=50000; tambahBelanja("Speaker Waterproof",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubSpeaker();
+    if(pilihan=='a'){ 
+        harga=25000; 
+        tambahBelanja("Speaker Mini",harga); 
+    }
+    else if(pilihan=='b'){ \
+        harga=35000; 
+        tambahBelanja("Speaker Bluetooth Kecil",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=40000; 
+        tambahBelanja("Speaker Cube",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=45000;
+        tambahBelanja("Speaker Bass",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=50000; 
+        tambahBelanja("Speaker Waterproof",harga);
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubSpeaker();
+    }
 
-    printf("Ketik K untuk pesan Speaker Portable lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubSpeaker();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Speaker Portable lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubSpeaker();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubSpeaker();
+        }
+    }
 
     return 0;
 }
@@ -475,20 +935,54 @@ int SubSmartwatch(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=6999000; tambahBelanja("Samsung Watch8 Classic",harga); }
-    else if(pilihan=='b'){ harga=569000; tambahBelanja("Xiaomi Smart Band 9",harga); }
-    else if(pilihan=='c'){ harga=859000; tambahBelanja("Huawei Watch Fit 4",harga); }
-    else if(pilihan=='d'){ harga=2999000; tambahBelanja("Imoo Z7",harga); }
-    else if(pilihan=='e'){ harga=13439000; tambahBelanja("Garmin Venu X1",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubSmartwatch();
+    if(pilihan=='a'){ 
+        harga=6999000; 
+        tambahBelanja("Samsung Watch8 Classic",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=569000; 
+        tambahBelanja("Xiaomi Smart Band 9",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=859000; 
+        tambahBelanja("Huawei Watch Fit 4",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=2999000; 
+        tambahBelanja("Imoo Z7",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=13439000; 
+        tambahBelanja("Garmin Venu X1",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubSmartwatch();
+    }
 
-    printf("Ketik K untuk pesan Smartwatch lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-    if(tolower(pilihan)=='k') return SubSmartwatch();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Smartwatch lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubSmartwatch();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubSmartwatch();
+        }
+    }
 
     return 0;
 }
@@ -512,22 +1006,54 @@ int SubDrone(){
     scanf(" %c",&pilihan);
     pilihan = tolower(pilihan);
 
-    if(pilihan=='a'){ harga=4939000; tambahBelanja("DJI Mini 4K",harga); }
-    else if(pilihan=='b'){ harga=17090000; tambahBelanja("DJI Mini 5 Pro Combo",harga); }
-    else if(pilihan=='c'){ harga=3000000; tambahBelanja("DJI Neo Basic",harga); }
-    else if(pilihan=='d'){ harga=1373000; tambahBelanja("Huawei A22 PRO GPS",harga); }
-    else if(pilihan=='e'){ harga=1645000; tambahBelanja("Brica Sky Explorer",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubDrone();
+    if(pilihan=='a'){ 
+        harga=4939000; 
+        tambahBelanja("DJI Mini 4K",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=17090000; 
+        tambahBelanja("DJI Mini 5 Pro Combo",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=3000000; 
+        tambahBelanja("DJI Neo Basic",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=1373000; 
+        tambahBelanja("Huawei A22 PRO GPS",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=1645000; 
+        tambahBelanja("Brica Sky Explorer",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubDrone();
+    }
 
-    printf("Ketik K untuk pesan Drone lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubDrone();
-    else if(tolower(pilihan)=='x') cetakStruk();
-    else if(tolower(pilihan)=='u') pemilihan();
-
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Drone lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubDrone();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubDrone();
+        }
+    }
     return 0;
 }
 
@@ -550,22 +1076,53 @@ int SubTablet(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=5979000; tambahBelanja("Huawei MatePad 11.5",harga);}
-    else if(pilihan=='b'){ harga=2999000; tambahBelanja("OPPO Pad SE 4/128",harga); }
-    else if(pilihan=='c'){ harga=1775000; tambahBelanja("Samsung Tab A9",harga); }
-    else if(pilihan=='d'){ harga=1649000; tambahBelanja("Xiaomi Redmi Pad SE",harga); }
-    else if(pilihan=='e'){ harga=23999000; tambahBelanja("iPad Pro 11",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubTablet();
-
-    printf("Ketik K untuk pesan Tablet lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubTablet();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
-
+    if(pilihan=='a'){ 
+        harga=5979000; 
+        tambahBelanja("Huawei MatePad 11.5",harga);
+    }
+    else if(pilihan=='b'){ 
+        harga=2999000; 
+        tambahBelanja("OPPO Pad SE 4/128",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=1775000; 
+        tambahBelanja("Samsung Tab A9",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=1649000; 
+        tambahBelanja("Xiaomi Redmi Pad SE",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=23999000; \
+        tambahBelanja("iPad Pro 11",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubTablet();
+    }
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Tablet lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubTablet();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubTablet();
+        }
+    }
     return 0;
 }
 
@@ -588,21 +1145,53 @@ int SubMonitor(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=1268250; tambahBelanja("LG 24MR400-B",harga); }
-    else if(pilihan=='b'){ harga=2696500; tambahBelanja("Xiaomi A27Qi 2K",harga); }
-    else if(pilihan=='c'){ harga=1099800; tambahBelanja("LG 19M38A",harga); }
-    else if(pilihan=='d'){ harga=909000; tambahBelanja("HGFRTEE Portable",harga); }
-    else if(pilihan=='e'){ harga=1382250; tambahBelanja("Philips 241v8b",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubMonitor();
-
-    printf("Ketik K untuk pesan Monitor lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubMonitor();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if(pilihan=='a'){ 
+        harga=1268250; 
+        tambahBelanja("LG 24MR400-B",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=2696500; 
+        tambahBelanja("Xiaomi A27Qi 2K",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=1099800; 
+        tambahBelanja("LG 19M38A",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=909000; 
+        tambahBelanja("HGFRTEE Portable",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=1382250; 
+        tambahBelanja("Philips 241v8b",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubMonitor();
+    }
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Monitor lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubMonitor();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubMonitor();
+        }
+    }
 
     return 0;
 }
@@ -626,21 +1215,54 @@ int SubWirelessEarphone(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=3499000; tambahBelanja("AirPods Pro",harga); }
-    else if(pilihan=='b'){ harga=170000; tambahBelanja("Baseus WM01",harga); }
-    else if(pilihan=='c'){ harga=1169100; tambahBelanja("JBL Wave Buds 2",harga); }
-    else if(pilihan=='d'){ harga=34200; tambahBelanja("QKZ CK5 HiFi",harga); }
-    else if(pilihan=='e'){ harga=39800; tambahBelanja("TWS Pro 4",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubWirelessEarphone();
+    if(pilihan=='a'){ 
+        harga=3499000; 
+        tambahBelanja("AirPods Pro",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=170000; 
+        tambahBelanja("Baseus WM01",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=1169100; 
+        tambahBelanja("JBL Wave Buds 2",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=34200; 
+        tambahBelanja("QKZ CK5 HiFi",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=39800; 
+        tambahBelanja("TWS Pro 4",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubWirelessEarphone();
+    }
 
-    printf("Ketik K untuk pesan Wireless Earphone lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubWirelessEarphone();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Wireless Earphone lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubWirelessEarphone();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubWirelessEarphone();
+        }
+    }
 
     return 0;
 }
@@ -665,21 +1287,54 @@ int SubLaptop(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=14000000; tambahBelanja("Laptop LOQ",harga); }
-    else if(pilihan=='b'){ harga=17000000; tambahBelanja("Laptop TUF",harga); }
-    else if(pilihan=='c'){ harga=11000000; tambahBelanja("Laptop ASUS",harga); }
-    else if(pilihan=='d'){ harga=9500000; tambahBelanja("Laptop MSI",harga); }
-    else if(pilihan=='e'){ harga=10000000; tambahBelanja("Laptop Macbook",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubLaptop();
+    if(pilihan=='a'){ 
+        harga=14000000; 
+        tambahBelanja("Laptop LOQ",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=17000000; 
+        tambahBelanja("Laptop TUF",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=11000000; 
+        tambahBelanja("Laptop ASUS",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=9500000; 
+        tambahBelanja("Laptop MSI",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=10000000; 
+        tambahBelanja("Laptop Macbook",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubLaptop();
+    }
 
-    printf("Ketik K untuk pesan Laptop lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubLaptop();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Laptop lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubLaptop();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubLaptop();
+        }
+    }
 
     return 0;
 }
@@ -703,22 +1358,54 @@ int SubHP(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=2300000; tambahBelanja("HP Samsung",harga); }
-    else if(pilihan=='b'){ harga=2400000; tambahBelanja("HP iPhone",harga); }
-    else if(pilihan=='c'){ harga=2700000; tambahBelanja("HP Oppo",harga); }
-    else if(pilihan=='d'){ harga=3500000; tambahBelanja("HP Vivo",harga); }
-    else if(pilihan=='e'){ harga=2500000; tambahBelanja("HP Advan",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubHP();
+    if(pilihan=='a'){ 
+        harga=2300000; 
+        tambahBelanja("HP Samsung",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=2400000; 
+        tambahBelanja("HP iPhone",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=2700000; 
+        tambahBelanja("HP Oppo",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=3500000; 
+        tambahBelanja("HP Vivo",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=2500000; 
+        tambahBelanja("HP Advan",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubHP();
+    }
 
-    printf("Ketik K untuk pesan Handphone lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubHP();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
-
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Handphone lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
+        if (pilihan=='k' || pilihan=='K'){
+            SubHP();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubHP();
+        }
+    }
     return 0;
 }
 
@@ -741,21 +1428,55 @@ int SubBlender(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=175000; tambahBelanja("Blender GP",harga); }
-    else if(pilihan=='b'){ harga=274000; tambahBelanja("Blender ZA",harga); }
-    else if(pilihan=='c'){ harga=135000; tambahBelanja("Blender CA",harga); }
-    else if(pilihan=='d'){ harga=155000; tambahBelanja("Blender DA",harga); }
-    else if(pilihan=='e'){ harga=150000; tambahBelanja("Blender BC",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubBlender();
+    if(pilihan=='a'){ 
+        harga=175000; 
+        tambahBelanja("Blender GP",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=274000; 
+        tambahBelanja("Blender ZA",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=135000; 
+        tambahBelanja("Blender CA",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=155000; 
+        tambahBelanja("Blender DA",harga); 
+    }
+    else if(pilihan=='e'){
+         harga=150000; 
+         tambahBelanja("Blender BC",harga);
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        SubBlender();
+    }
 
-    printf("Ketik K untuk pesan Blender lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Blender lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
 
-    if(tolower(pilihan)=='k') return SubBlender();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+        if (pilihan=='k' || pilihan=='K'){
+            SubBlender();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            SubBlender();
+        }
+    }
 
     return 0;
 }
@@ -779,21 +1500,55 @@ int SubRicecooker(){
     scanf(" %c",&pilihan);
     pilihan=tolower(pilihan);
 
-    if(pilihan=='a'){ harga=255000; tambahBelanja("Rice Cooker 17KI",harga); }
-    else if(pilihan=='b'){ harga=240000; tambahBelanja("Rice Cooker 12II",harga); }
-    else if(pilihan=='c'){ harga=325000; tambahBelanja("Rice Cooker 14AC",harga); }
-    else if(pilihan=='d'){ harga=270000; tambahBelanja("Rice Cooker 15CD",harga); }
-    else if(pilihan=='e'){ harga=250000; tambahBelanja("Rice Cooker 17ZA",harga); }
-    else if(pilihan=='x') cetakStruk();
-    else if(pilihan=='u') pemilihan();
-    else return SubRicecooker();
+    if(pilihan=='a'){ 
+        harga=255000; 
+        tambahBelanja("Rice Cooker 17KI",harga); 
+    }
+    else if(pilihan=='b'){ 
+        harga=240000; 
+        tambahBelanja("Rice Cooker 12II",harga); 
+    }
+    else if(pilihan=='c'){ 
+        harga=325000; 
+        tambahBelanja("Rice Cooker 14AC",harga); 
+    }
+    else if(pilihan=='d'){ 
+        harga=270000; 
+        tambahBelanja("Rice Cooker 15CD",harga); 
+    }
+    else if(pilihan=='e'){ 
+        harga=250000; 
+        tambahBelanja("Rice Cooker 17ZA",harga); 
+    }
+    else if(pilihan=='x') {
+        cetakStruk();
+    }
+    else if(pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        return SubRicecooker();
+    }
 
-    printf("Ketik K untuk pesan Rice Cooker lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Rice Cooker lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c",&pilihan);
 
-    if(tolower(pilihan)=='k') return SubRicecooker();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
+        if (pilihan=='k' || pilihan=='K'){
+            return SubRicecooker();
+        }
+        else if(pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if(pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            return SubRicecooker();
+        }
+    }
 
     return 0;
 }
@@ -818,63 +1573,60 @@ int SubPowerbank(){
     scanf(" %c", &pilihan);
     pilihan = tolower(pilihan);
 
-    if (pilihan=='a'){ harga = 250000; tambahBelanja("Power Bank 18C", harga);}
-    else if (pilihan=='b'){ harga = 270000; tambahBelanja("Power Bank 19C", harga);}
-    else if (pilihan=='c'){ harga = 320000; tambahBelanja("Power Bank 20C", harga);}
-    else if (pilihan=='d'){ harga = 350000; tambahBelanja("Power Bank 21C", harga);}
-    else if (pilihan=='e'){ harga = 300000; tambahBelanja("Power Bank 22C", harga);}
-    else if (pilihan=='x') cetakStruk();
-    else if (pilihan=='u') pemilihan();
-    else return SubPowerbank();
-
-    printf("Ketik K untuk pesan Power Bank lagi, U untuk ke Menu Utama, X untuk selesai: ");
-    scanf(" %c",&pilihan);
-
-    if(tolower(pilihan)=='k') return SubPowerbank();
-    if(tolower(pilihan)=='x') cetakStruk();
-    if(tolower(pilihan)=='u') pemilihan();
-
-    return 0;
-}
-
-
-
-int pemilihan(){
-    int pilih = tampilkanMenu();
-
-    switch(pilih){
-        case 1: SubKulkas(); break;
-        case 2: SubCuci(); break;
-        case 3: SubAc(); break;
-        case 4: SubTV(); break;
-        case 5: SubKompor(); break;
-        case 6: SubLampu(); break;
-        case 7: SubKipas(); break;
-        case 8: SubSenter(); break;
-        case 9: SubStopKontak(); break;
-        case 10: SubSpeaker(); break;
-        case 11: SubSmartwatch(); break;
-        case 12: SubDrone(); break;
-        case 13: SubTablet(); break;
-        case 14: SubMonitor(); break;
-        case 15: SubWirelessEarphone(); break;
-        case 16: SubLaptop(); break;
-        case 17: SubHP(); break;
-        case 18: SubBlender(); break;
-        case 19: SubRicecooker(); break;
-        case 20: SubPowerbank(); break;
-        case 21: cetakStruk(); break;
-        default:
-            printf("Pilihan tidak valid!\n");
-            pemilihan();
-            break;
+    if (pilihan=='a'){ 
+        harga = 250000; 
+        tambahBelanja("Power Bank 18C", harga);
+    }
+    else if (pilihan=='b'){ 
+        harga = 270000; 
+        tambahBelanja("Power Bank 19C", harga);
+    }
+    else if (pilihan=='c'){ 
+        harga = 320000; 
+        tambahBelanja("Power Bank 20C", harga);
+    }
+    else if (pilihan=='d'){ 
+        harga = 350000; 
+        tambahBelanja("Power Bank 21C", harga);
+    }
+    else if (pilihan=='e'){ 
+        harga = 300000; 
+        tambahBelanja("Power Bank 22C", harga);
+    }
+    else if (pilihan=='x') {
+        cetakStruk();
+    }
+    else if (pilihan=='u') {
+        pemilihan();
+    }
+    else {
+        printf("PILHAN ANDA TIDAK VALID.\n");
+        return SubPowerbank();
     }
 
+    if (pilihan=='a' || pilihan=='b' || pilihan=='c' || pilihan=='d' || pilihan=='e'){
+        printf("Ketik K untuk pesan Power Bank lagi, U untuk ke Menu Utama, X untuk selesai: ");
+        scanf(" %c", &pilihan);
+
+        if (pilihan=='k' || pilihan=='K'){
+            return SubPowerbank();
+        }
+        else if (pilihan=='x' || pilihan=='X'){
+            cetakStruk();
+        }
+        else if (pilihan=='u' || pilihan=='U'){
+            pemilihan();
+        }
+        else {
+            printf("PILHAN ANDA TIDAK VALID.\n");
+            return SubPowerbank();
+        }
+    }
     return 0;
 }
 
-
 int main(){
+
 
     header("        Selamat Datang di Toko Elektronik Kami!");
 
