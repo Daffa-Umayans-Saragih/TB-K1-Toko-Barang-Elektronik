@@ -1611,40 +1611,57 @@ int SubPowerbank(){
     return 0;
 }
 
-int tampilkanMenu(){
+int tampilkanMenu() {
     int pilihanbesar;
+    int valid;
 
-    header("                        MENU UTAMA");
+    while (1) {
+        header("                        MENU UTAMA");
 
-    printf(
-    "1.  Kulkas\n"
-    "2.  Mesin Cuci\n"
-    "3.  AC\n"
-    "4.  TV\n"
-    "5.  Kompor Listrik\n"
-    "6.  Lampu LED\n"
-    "7.  Kipas Mini\n"
-    "8.  Senter LED\n"
-    "9.  Stop Kontak\n"
-    "10. Speaker Portable\n"
-    "11. SmartWatch\n"
-    "12. Drone\n"
-    "13. Tablet\n"
-    "14. Monitor\n"
-    "15. Wireless Earphone\n"
-    "16. Laptop\n"
-    "17. Handphone\n"
-    "18. Blender\n"
-    "19. Rice Cooker\n"
-    "20. Power Bank\n"
-    "21. Cetak Struk\n"
-    );
+        printf(
+        "1.  Kulkas\n"
+        "2.  Mesin Cuci\n"
+        "3.  AC\n"
+        "4.  TV\n"
+        "5.  Kompor Listrik\n"
+        "6.  Lampu LED\n"
+        "7.  Kipas Mini\n"
+        "8.  Senter LED\n"
+        "9.  Stop Kontak\n"
+        "10. Speaker Portable\n"
+        "11. SmartWatch\n"
+        "12. Drone\n"
+        "13. Tablet\n"
+        "14. Monitor\n"
+        "15. Wireless Earphone\n"
+        "16. Laptop\n"
+        "17. Handphone\n"
+        "18. Blender\n"
+        "19. Rice Cooker\n"
+        "20. Power Bank\n"
+        "21. Cetak Struk\n"
+        );
 
-    garis();
-    printf(GREEN "Masukkan pilihan Anda (1-21): " RESET);
-    scanf("%d", &pilihanbesar);
+        garis();
 
-    return pilihanbesar;
+        printf(GREEN "Masukkan pilihan Anda (1-21): " RESET);
+
+        valid = scanf("%d", &pilihanbesar);
+
+        
+        if (!valid) {
+            printf( "\nInput tidak valid! Harus angka 1-21.\n\n" );
+            while (getchar() != '\n');
+            continue; 
+        }
+
+        if (pilihanbesar < 1 || pilihanbesar > 21) {
+            printf( "\nPilihan tidak valid! Silakan pilih angka 1-21.\n\n" );
+            continue;
+        }
+
+        return pilihanbesar; 
+    }
 }
 
 int pemilihan(){
