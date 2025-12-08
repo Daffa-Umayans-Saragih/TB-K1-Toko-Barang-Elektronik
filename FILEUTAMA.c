@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <time.h>
 
 #define RESET   "\033[0m"
 #define GREEN   "\033[1;32m"
@@ -22,50 +23,89 @@ void garis(){
     printf("--------------------------------------------------------\n");
 }
 
+
+int getLogCounter() {
+    FILE *f = fopen("log_counter.txt", "r");
+    int num = 0;
+
+    if (f) {
+        fscanf(f, "%d", &num);
+        fclose(f);
+    }
+
+    // update counter
+    f = fopen("log_counter.txt", "w");
+    fprintf(f, "%d", num + 1);
+    fclose(f);
+
+    return num + 1;
+}
+
 void simpanHistory(int total){
-    FILE *fp = fopen("history.txt", "a");
-    if (!fp){
-        printf("Gagal membuka file history!\n");
+    
+    int logNum = getLogCounter();
+
+    time_t now = time(NULL);
+    struct tm *t = localtime(&now);
+
+    char tanggal[50];
+    strftime(tanggal, sizeof(tanggal), "%d-%m-%Y %H:%M:%S", t);
+
+    char bonus[50] = "Tidak Ada";
+
+    if(total >= 80000000) {
+       strcpy(bonus, "Kulkas 2 Pintu");
+    }
+    else if(total >= 60000000) {
+       strcpy(bonus, "Kulkas 1 Pintu");
+    }
+    else if(total >= 40000000) {
+       strcpy(bonus, "OPPO Pad SE (4/128)");
+    }
+    else if(total >= 30000000) {
+       strcpy(bonus, "Monitor LG 19M38A");
+    }
+    else if(total >= 20000000) {
+       strcpy(bonus, "Xiaomi Smart Band 9");}
+
+    else if(total >= 10000000) {
+       strcpy(bonus, "Speaker Bluetooth Mini");
+    }
+    else if(total >= 3000000){
+       strcpy(bonus, "Lampu LED 10W");
+    }
+
+    FILE *log = fopen("history_log.txt", "a");
+    if(!log){
+        printf("Gagal membuka file history_log!\n");
         return;
     }
 
-    fprintf(fp, "===== HISTORY BELANJA =====\n");
+    fprintf(log, "LOG %d | [%s] Total: Rp %d | Bonus: %s\n",
+            logNum, tanggal, total, bonus);
+    fclose(log);
+
+    FILE *detail = fopen("history_detail.txt", "a");
+    if(!detail){
+        printf("Gagal membuka file history_detail!\n");
+        return;
+    }
+
+    fprintf(detail, "=============== DETAIL HISTORY (LOG %d) ===============\n",
+            logNum);
+    fprintf(detail, "Tanggal : %s\n", tanggal);
+    fprintf(detail, "Daftar Belanja:\n");
+
     for(int i = 0; i < jumlahBarang; i++){
-        fprintf(fp, "%d. %s - Rp %d\n", i+1, namaBarang[i], hargaBarang[i]);
+        fprintf(detail, "%d. %s - Rp %d\n", i+1, namaBarang[i], hargaBarang[i]);
     }
 
-    fprintf(fp, "TOTAL BELANJA: Rp %d\n", total);
+    fprintf(detail, "TOTAL : Rp %d\n", total);
+    fprintf(detail, "BONUS : %s\n", bonus);
+    fprintf(detail, "========================================================\n\n");
 
-    // ===== BONUS BERDASARKAN TOTAL BELANJA =====
-    if (total >= 80000000) {
-        fprintf(fp, "BONUS: Kulkas 2 Pintu\n");
-    }
-    else if (total >= 60000000) {
-        fprintf(fp, "BONUS: Kulkas 1 Pintu\n");
-    }
-    else if (total >= 40000000) {
-        fprintf(fp, "BONUS: OPPO Pad SE (4/128)\n");
-    }
-    else if (total >= 30000000) {
-        fprintf(fp, "BONUS: Monitor LG 19M38A\n");
-    }
-    else if (total >= 20000000) {
-        fprintf(fp, "BONUS: Xiaomi Smart Band 9\n");
-    }
-    else if (total >= 10000000) {
-        fprintf(fp, "BONUS: Speaker Bluetooth Mini\n");
-    }
-    else if (total >= 3000000) {
-        fprintf(fp, "BONUS: Lampu LED 10 Watt\n");
-    }
-    else {
-        fprintf(fp, "BONUS: Tidak Ada\n");
-    }
-
-    fprintf(fp, "===========================\n\n");
-    fclose(fp);
+    fclose(detail);
 }
-
 
 void tambahBelanja(const char *nama, int harga){
     strcpy(namaBarang[jumlahBarang], nama);
@@ -87,7 +127,6 @@ void cetakStruk(){
     printf(GREEN "                  TOTAL HARGA: Rp %d\n" RESET, total);
     garis();
 
-    // BONUS
     if (total >= 80000000) {
         printf("Selamat anda mendapat bonus Kulkas 2 Pintu\n");
     }
@@ -1754,9 +1793,7 @@ int main(){
 
     printf("PAKET 3  | Belanja Rp 20.000.000 - 29.999.999\n");
     printf("Bonus    : Smart Band Xiaomi Smart Band 9\n\n");
-
-    printf("PAKET 4  | Belanja Rp 30.000.000 - 39.999.999\n");
-    printf("Bonus    : Monitor LG 19 Inch (19M38A)\n\n");
+    
 
     printf("PAKET 5  | Belanja Rp 40.000.000 - 59.999.999\n");
     printf("Bonus    : Tablet OPPO Pad SE (4/128)\n\n");
